@@ -1,8 +1,9 @@
 import * as Puppeteer from 'puppeteer';
 import lmsConfig from '../../private/lmsConfig';
 import goto from '../utility/goto';
+import { Course } from './course';
 
-export default async function getCourseList(page: Puppeteer.Page) {
+export default async function getCourseList(page: Puppeteer.Page, includeTerms?: string[]): Promise<Course[]> {
   const courseUrl = `${lmsConfig.url}/courses`;
   const tableSelectors = {
     current: '#my_courses_table',
@@ -18,17 +19,20 @@ export default async function getCourseList(page: Puppeteer.Page) {
 
   await goto(page, courseUrl);
 
-  console.log('Getting Courses');
-  const current = await page.evaluate(getCourse, tableSelectors.current, selectors);
-  const past = await page.evaluate(getCourse, tableSelectors.past, selectors);
-  const future = await page.evaluate(getCourse, tableSelectors.future, selectors);
-
-  return current.concat(past, future);
+  console.log('Getting Course List');
+  const current: Course[] = await page.evaluate(getCourse, tableSelectors.current, selectors);
+  const past: Course[] = await page.evaluate(getCourse, tableSelectors.past, selectors);
+  const future: Course[] = await page.evaluate(getCourse, tableSelectors.future, selectors);
+  let courses: Course[] = current.concat(past, future);
+  if (includeTerms) {
+    courses = courses.filter(course => includeTerms.includes(course.term));
+  }
+  return courses;
 }
 
-function getCourse(table, selector) {
+function getCourse(table, selector): Course[] {
   let numCourses = document.querySelectorAll(`${table}${selector.row}`).length;
-  let courses = [];
+  let courses: Course[] = [];
 
   for (let i = 1; i <= numCourses; i++) {
     const titleSelector = selector.title.replace('INDEX', i);
@@ -37,11 +41,12 @@ function getCourse(table, selector) {
     const titleEl = document.querySelector(`${table}${titleSelector}`);
     const linkEl = document.querySelector(`${table}${linkSelector}`);
     const termEl = document.querySelector(`${table}${termSelector}`);
+    let id = linkEl.getAttribute('href').split('/');
 
     if (titleEl) {
       courses.push({
         title: titleEl.innerHTML.trim(),
-        link: linkEl.getAttribute('href'),
+        id: id[id.length-1],
         term: termEl.innerHTML.trim()
       });
     }
