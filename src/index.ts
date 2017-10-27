@@ -1,8 +1,8 @@
 import * as Puppeteer from 'puppeteer';
 
-import setupPage from './utility/setupPage';
-import login from './utility/login';
-import getCourses from './utility/getCourses';
+import setupPage from './config/setupPage';
+import login from './config/login';
+import getCourseList from './stats/getCourseList';
 
 run();
 
@@ -13,7 +13,7 @@ async function run() {
   const page: Puppeteer.Page = await setupPage(browser);
   await login(page);
 
-  let courses = await getCourses(page);
+  let courses = await getCourseList(page);
   console.log(`Courses: #${courses.length}`);
   browser.close();
 }
