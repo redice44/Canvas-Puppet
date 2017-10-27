@@ -1,10 +1,10 @@
 import * as Puppeteer from 'puppeteer';
-import lmsConfig from '../../private/lmsConfig';
+import { rootUrl } from '../../private/lmsConfig';
 import goto from '../utility/goto';
 import { Course } from './course';
 
 export default async function getCourseList(page: Puppeteer.Page, includeTerms?: string[]): Promise<Course[]> {
-  const courseUrl = `${lmsConfig.url}/courses`;
+  const courseUrl = `${rootUrl}/courses`;
   const tableSelectors = {
     current: '#my_courses_table',
     past: '#past_enrollments_table',
