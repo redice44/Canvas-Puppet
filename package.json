@@ -1,0 +1,27 @@
+{
+  "name": "canvas-puppet",
+  "version": "0.0.1",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "tsc --watch"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Matt Thomson",
+    "email": "red.cataclysm@gmail.com"
+  },
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/node": "^8.0.47",
+    "@types/puppeteer": "^0.12.1",
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "puppeteer": "^0.12.0"
+  }
+}

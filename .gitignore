@@ -1,0 +1,5 @@
+node_modules/*
+private/*
+courses/*
+src/**/*.js*
+**/*.DS_Store
