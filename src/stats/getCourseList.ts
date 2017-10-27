@@ -1,5 +1,6 @@
 import * as Puppeteer from 'puppeteer';
 import lmsConfig from '../../private/lmsConfig';
+import goto from '../utility/goto';
 
 export default async function getCourseList(page: Puppeteer.Page) {
   const courseUrl = `${lmsConfig.url}/courses`;
@@ -15,7 +16,7 @@ export default async function getCourseList(page: Puppeteer.Page) {
     term: ' > tbody > tr:nth-child(INDEX) > td.course-list-no-left-border.course-list-term-column'
   };
 
-  await page.goto(courseUrl);
+  await goto(page, courseUrl);
 
   console.log('Getting Courses');
   const current = await page.evaluate(getCourse, tableSelectors.current, selectors);
