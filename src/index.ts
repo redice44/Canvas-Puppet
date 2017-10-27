@@ -1,22 +1,30 @@
 import * as Puppeteer from 'puppeteer';
 
-import setupPage from './config/setupPage';
-import login from './config/login';
-import getCourseList from './stats/getCourseList';
-import { Course } from './stats/course';
+import captureCourses from './capture/courses';
+import { DeviceList } from './stats/device';
+import getDesktop720p from './stats/devices/desktop-720p';
+import getDesktop1080p from './stats/devices/desktop-1080p';
 
 run();
 
 async function run() {
+  const today = new Date();
   const browser: Puppeteer.Browser  = await Puppeteer.launch({
     // headless: false
   });
-  const page: Puppeteer.Page = await setupPage(browser);
-  await login(page);
+  const deviceList: DeviceList = {
+    screenshot: {
+      rootPath: '',
+      subPath: '',
+      date: `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`
+    },
+    devices: []
+  }
 
-  let courses: Course[] = await getCourseList(page);
-  console.log(`Courses: #${courses.length}`);
+  deviceList.devices.push(await getDesktop720p(browser));
+  deviceList.devices.push(await getDesktop1080p(browser));
 
+  await captureCourses(browser, deviceList);
 
   browser.close();
 }

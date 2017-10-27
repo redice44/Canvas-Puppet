@@ -41,9 +41,9 @@ function getCourse(table, selector): Course[] {
     const titleEl = document.querySelector(`${table}${titleSelector}`);
     const linkEl = document.querySelector(`${table}${linkSelector}`);
     const termEl = document.querySelector(`${table}${termSelector}`);
-    let id = linkEl.getAttribute('href').split('/');
 
     if (titleEl) {
+      const id = linkEl.getAttribute('href').split('/');
       courses.push({
         title: titleEl.innerHTML.trim(),
         id: id[id.length-1],
