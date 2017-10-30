@@ -1,8 +1,9 @@
 import * as Puppeteer from 'puppeteer';
 
-import { rootUrl, frontPageSelectors } from '../../private/lmsConfig';
+import { rootUrl } from '../../private/lmsConfig';
 import { DeviceList } from '../stats/device';
 import { Course } from '../stats/course';
+import frontPageSelectors from '../config/selectors/frontPage';
 import goto from '../utility/goto';
 import emulateElement from '../utility/emulateElement';
 import ss from '../utility/ss';
