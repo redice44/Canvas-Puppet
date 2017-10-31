@@ -1,8 +1,8 @@
 import * as Puppeteer from 'puppeteer';
 
 import { rootUrl } from '../../private/lmsConfig';
-import { DeviceList } from '../stats/device';
-import { Course } from '../stats/course';
+import { DeviceList } from '../interfaces/device';
+import { Course } from '../interfaces/course';
 import frontPageSelectors from '../config/selectors/frontPage';
 import capturePage from './page';
 

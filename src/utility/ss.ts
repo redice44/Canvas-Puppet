@@ -1,7 +1,7 @@
 import * as mkdirp from 'mkdirp';
 import * as Puppeteer from 'puppeteer';
 
-import { Screenshot } from '../stats/device';
+import { Screenshot } from '../interfaces/device';
 
 export default async function ss(el: Puppeteer.ElementHandle, ss: Screenshot, deviceName: string) {
   console.log(`    Generating Screenshot: ${ss.rootPath}/${ss.subPath}/${ss.date}/${deviceName}.png`);

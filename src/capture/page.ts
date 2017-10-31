@@ -1,6 +1,6 @@
 import * as Puppeteer from 'puppeteer';
 
-import { DeviceList } from '../stats/device';
+import { DeviceList } from '../interfaces/device';
 import goto from '../utility/goto';
 import emulateElement from '../utility/emulateElement';
 import ss from '../utility/ss';

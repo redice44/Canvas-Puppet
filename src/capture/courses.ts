@@ -4,8 +4,8 @@ import login from '../config/login';
 import captureFrontPage from './frontPage';
 import captureModules from './modules';
 
-import { Course } from '../stats/course';
-import { DeviceList } from '../stats/device';
+import { Course } from '../interfaces/course';
+import { DeviceList } from '../interfaces/device';
 import { rootUrl } from '../../private/lmsConfig';
 import goto from '../utility/goto';
 

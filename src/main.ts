@@ -1,9 +1,9 @@
 import * as Puppeteer from 'puppeteer';
 
 import captureCourses from './capture/courses';
-import { DeviceList } from './stats/device';
-import getDesktop720p from './stats/devices/desktop-720p';
-import getDesktop1080p from './stats/devices/desktop-1080p';
+import { DeviceList } from './interfaces/device';
+import getDesktop720p from './devices/desktop-720p';
+import getDesktop1080p from './devices/desktop-1080p';
 
 run();
 

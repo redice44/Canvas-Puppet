@@ -1,9 +1,9 @@
 import * as Puppeteer from 'puppeteer';
 
 import { rootUrl } from '../../private/lmsConfig';
-import { DeviceList } from '../stats/device';
-import { Course } from '../stats/course';
-import { subModuleItem, ModuleItems } from '../stats/module';
+import { DeviceList } from '../interfaces/device';
+import { Course } from '../interfaces/course';
+import { subModuleItem, ModuleItems } from '../interfaces/module';
 import { selectors as moduleSelectors, itemTypes } from '../config/selectors/modules';
 import capturePage from './page';
 
