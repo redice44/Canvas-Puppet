@@ -6,6 +6,7 @@ interface Credentials {
 export interface LoginInfo {
   credentials: Credentials,
   url: string,
+  expectedLanding: string,
   selectors: {
     username: string,
     password: string,

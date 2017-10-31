@@ -15,11 +15,13 @@ export default async function login(page: Puppeteer.Page, loginInfo: LoginInfo) 
 
     await page.click(loginInfo.selectors.loginButton);
     await page.waitForNavigation();
+    if (page.url() !== loginInfo.expectedLanding) {
+      throw new Error(`Login not successful. Expected to be at ${loginInfo.expectedLanding}, but is at ${page.url()}`);
+    }
   } catch (e) {
     if (e.code === 'ERR_ASSERTION') {
       console.log('Already Logged In');
     } else {
-      console.log(e);
       throw e;
     }
   }
