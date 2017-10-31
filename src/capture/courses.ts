@@ -2,6 +2,7 @@ import * as Puppeteer from 'puppeteer';
 
 import login from '../config/login';
 import captureFrontPage from './frontPage';
+import captureModules from './modules';
 
 import { Course } from '../stats/course';
 import { DeviceList } from '../stats/device';
@@ -14,12 +15,13 @@ export default async function captureCourses(browser: Puppeteer.Browser, deviceL
   await login(page);
 
   let courses: Course[] = await getCourseList(page);
-  console.log(`Courses: #${courses.length}`);
+  console.log(`\nCourses: #${courses.length}\n`);
 
-  for (let i = 0; i < courses.length; i++) {
-    console.log(`Capturing Course ${i+1} of ${courses.length}`);
+  // for (let i = 0; i < courses.length; i++) {
+    let i = 0;
+    console.log(`\nCapturing Course ${i+1} of ${courses.length}: ${courses[i].title}`);
     await captureCourse(page, courses[i], deviceList);
-  }
+  // }
 
   await page.close();
 }
@@ -27,6 +29,7 @@ export default async function captureCourses(browser: Puppeteer.Browser, deviceL
 async function captureCourse(page: Puppeteer.Page, course: Course, deviceList: DeviceList) {
   deviceList.screenshot.rootPath = `courses/${course.term}/${course.title}`
   await captureFrontPage(page, course, deviceList);
+  await captureModules(page, course, deviceList);
 }
 
 async function getCourseList(page: Puppeteer.Page, includeTerms?: string[]): Promise<Course[]> {
@@ -45,7 +48,6 @@ async function getCourseList(page: Puppeteer.Page, includeTerms?: string[]): Pro
 
   await goto(page, courseUrl);
 
-  console.log('Getting Course List');
   const current: Course[] = await page.evaluate(getCourse, tableSelectors.current, selectors);
   const past: Course[] = await page.evaluate(getCourse, tableSelectors.past, selectors);
   const future: Course[] = await page.evaluate(getCourse, tableSelectors.future, selectors);
