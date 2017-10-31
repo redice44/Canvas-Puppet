@@ -2,9 +2,11 @@
   "name": "canvas-puppet",
   "version": "0.0.1",
   "description": "",
-  "main": "build/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf ./dist && find ./src -type f -name '*.js' -delete && find ./src -type f -name '*.js.map' -delete",
+    "dist": "npm run build && mkdir -p ./dist && cp -r ./src/* ./dist/ && find ./dist -type f -name '*.ts' -delete && find ./dist -type f -name '*.js.map' -delete",
     "start": "node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "tsc --watch --pretty"
