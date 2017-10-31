@@ -2,6 +2,7 @@ import * as Puppeteer from 'puppeteer';
 
 import goto from '../utility/goto';
 import { LoginInfo } from '../interfaces/credentials';
+import { LoginError } from '../utility/errors';
 
 export default async function login(page: Puppeteer.Page, loginInfo: LoginInfo) {
   console.log('Logging In');
@@ -16,7 +17,7 @@ export default async function login(page: Puppeteer.Page, loginInfo: LoginInfo) 
     await page.click(loginInfo.selectors.loginButton);
     await page.waitForNavigation();
     if (page.url() !== loginInfo.expectedLanding) {
-      throw new Error(`Login not successful. Expected to be at ${loginInfo.expectedLanding}, but is at ${page.url()}`);
+      throw new LoginError(`Login not successful. Expected to be at ${loginInfo.expectedLanding}, but is at ${page.url()}`);
     }
   } catch (e) {
     if (e.code === 'ERR_ASSERTION') {

@@ -2,4 +2,5 @@ node_modules/*
 private/*
 courses/*
 src/**/*.js*
+test/**/*.js*
 **/*.DS_Store
