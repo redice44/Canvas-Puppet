@@ -13,7 +13,8 @@ export default async function goto(page: Puppeteer.Page, url: string, retry: num
         console.log(`    Retrying...\n`);
         await goto(page, url, retry-1);
       } else {
-        throw new NavigationError(e.message, url, NavigationErrorCodes.FAILED);
+        console.log();
+        throw new NavigationError(e.message, NavigationErrorCodes.FAILED, url);
       }
     } else if (e.message.includes('Navigation Timeout Exceeded')) {
       console.log(`    Timed out navigating to: ${url}`);
@@ -21,9 +22,11 @@ export default async function goto(page: Puppeteer.Page, url: string, retry: num
         console.log(`    Retrying...\n`);
         await goto(page, url, retry-1);
       } else {
-        throw new NavigationError(e.message, url, NavigationErrorCodes.TIMEOUT);
+        console.log();
+        throw new NavigationError(e.message, NavigationErrorCodes.TIMEOUT, url);
       }
+    } else {
+      throw e;
     }
-    throw e;
   }
 }

@@ -1,15 +1,40 @@
 import * as Puppeteer from 'puppeteer';
 import * as CanvasPuppet from '../src';
 
-import { LoginError } from '../src/utility/errors';
 import { LoginInfo } from '../src/interfaces/credentials';
 import { loginInfo } from '../private/loginInfo';
 
 test();
 
 async function test() {
-  await login(loginInfo);
-  await login(Object.assign({}, loginInfo, { expectedLanding: '' }));
+  let customLoginInfo;
+
+  customLoginInfo = copyInfo(loginInfo);
+  customLoginInfo.url = 'http://blargjs.sji';
+  await login(customLoginInfo);
+
+  customLoginInfo = copyInfo(loginInfo);
+  customLoginInfo.selectors.username = '';
+  await login(customLoginInfo);
+
+  customLoginInfo = copyInfo(loginInfo);
+  customLoginInfo.selectors.username = '#foo';
+  await login(customLoginInfo);
+
+  customLoginInfo = copyInfo(loginInfo);
+  customLoginInfo.credentials.username = 'foo';
+  await login(customLoginInfo);
+
+  customLoginInfo = copyInfo(loginInfo);
+  customLoginInfo.selectors.loginButton = loginInfo.selectors.username;
+  await login(customLoginInfo);
+}
+
+function copyInfo(loginInfo: LoginInfo): LoginInfo {
+  let customLoginInfo = Object.assign({}, loginInfo);
+  customLoginInfo.selectors = Object.assign({}, loginInfo.selectors);
+  customLoginInfo.credentials = Object.assign({}, loginInfo.credentials);
+  return customLoginInfo;
 }
 
 async function login(info: LoginInfo) {
@@ -20,14 +45,9 @@ async function login(info: LoginInfo) {
 
   try {
     await CanvasPuppet.login(page, info);
-  } catch (e) {
-    if (e instanceof LoginError) {
-      console.log('Login Failed');
-    } else {
-      console.log(e);
-    }
+  } catch(e) {
+    console.log(`    ${e.message}\n`);
   }
-
   await page.close();
   await browser.close();
 }
