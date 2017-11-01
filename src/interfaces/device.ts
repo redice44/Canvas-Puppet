@@ -2,7 +2,8 @@ import * as Puppeteer from 'puppeteer';
 
 export interface Screenshot {
   rootPath: string,
-  subPath: string,
+  subPrePath: string,
+  subPostPath: string,
   date: string
 };
 

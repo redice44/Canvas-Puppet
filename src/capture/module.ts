@@ -7,7 +7,7 @@ import capturePage from './page';
 
 export default async function captureModule(page: Puppeteer.Page, rootUrl: string, moduleItems: ModuleItems, deviceList: DeviceList) {
   for (let i = 0; i < moduleItems.items.length; i++) {
-    deviceList.screenshot.subPath = `Modules/${moduleItems.title}/${i+1}_${moduleItems.items[i].title}`;
+    deviceList.screenshot.subPostPath = `Modules/${moduleItems.title}/${i+1}_${moduleItems.items[i].title}`;
     switch(moduleItems.items[i].type) {
       case 'page':
         await capturePage(page, `${rootUrl}/${moduleItems.items[i].link}`, '#wiki_page_show > div.show-content.user_content', deviceList);

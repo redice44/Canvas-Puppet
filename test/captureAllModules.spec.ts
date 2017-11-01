@@ -16,7 +16,8 @@ async function test() {
   const deviceList: DeviceList = {
     screenshot: {
       rootPath: 'screenshots/test',
-      subPath: '',
+      subPrePath: '',
+      subPostPath: '',
       date: 'date'
     },
     devices: []

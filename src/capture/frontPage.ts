@@ -7,7 +7,7 @@ import capturePage from './page';
 
 export default async function captureFrontPage(page: Puppeteer.Page, rootUrl: string, course: Course, deviceList: DeviceList) {
   const courseUrl = `${rootUrl}/courses/${course.id}`;
-  deviceList.screenshot.subPath = 'Front Page';
+  deviceList.screenshot.subPostPath = 'Front Page';
 
   await capturePage(page, courseUrl, frontPageSelectors.content, deviceList);
 }
