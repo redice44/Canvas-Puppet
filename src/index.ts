@@ -42,7 +42,14 @@ export async function captureAllModules(page: Puppeteer.Page, rootUrl: string, c
   }
 }
 
-export async function captureCourse(page: Puppeteer.Page, rootUrl: string, course, deviceList: DeviceList, enumerate: boolean = true) {
+export async function captureCourse(page: Puppeteer.Page, rootUrl: string, course: Course, deviceList: DeviceList, enumerate: boolean = true) {
+  deviceList.screenshot.subPrePath = `${course.term}/${course.title}`;
   await captureFrontPage(page, rootUrl, course, deviceList);
   await captureAllModules(page, rootUrl, course, deviceList, enumerate);
+}
+
+export async function captureCourseList(page: Puppeteer.Page, rootUrl: string, courses: Course[], deviceList: DeviceList, enumerate: boolean = true) {
+  for(let i = 0; i < courses.length; i++) {
+    await captureCourse(page, rootUrl, courses[i], deviceList, enumerate);
+  }
 }
