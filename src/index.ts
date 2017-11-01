@@ -30,3 +30,19 @@ export async function moduleList(page: Puppeteer.Page, rootUrl: string, course: 
 export async function captureModule(page: Puppeteer.Page, rootUrl: string, module: ModuleItems, deviceList: DeviceList) {
   await _captureModule_(page, rootUrl, module, deviceList);
 }
+
+export async function captureAllModules(page: Puppeteer.Page, rootUrl: string, course: Course, deviceList: DeviceList, enumerate: boolean = true) {
+  const modules = await moduleList(page, rootUrl, course);
+
+  for (let i = 0; i < modules.length; i++) {
+    if (enumerate) {
+      modules[i].title = `${i}_${modules[i].title}`;
+    }
+    await captureModule(page, rootUrl, modules[i], deviceList);
+  }
+}
+
+export async function captureCourse(page: Puppeteer.Page, rootUrl: string, course, deviceList: DeviceList, enumerate: boolean = true) {
+  await captureFrontPage(page, rootUrl, course, deviceList);
+  await captureAllModules(page, rootUrl, course, deviceList, enumerate);
+}
