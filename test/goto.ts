@@ -1,6 +1,6 @@
 import * as Puppeteer from 'puppeteer';
 
-import { NavigationError } from '../src/utility/errors';
+import { NavigationError } from '../src/errors/navigation';
 import goto from '../src/utility/goto';
 
 test();

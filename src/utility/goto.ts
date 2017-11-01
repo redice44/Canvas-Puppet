@@ -1,6 +1,6 @@
 import * as Puppeteer from 'puppeteer';
 
-import { NavigationError, NavigationErrorCodes } from '../utility/errors';
+import { NavigationError, NavigationErrorCodes } from '../errors/navigation';
 
 export default async function goto(page: Puppeteer.Page, url: string, retry: number = 2) {
   console.log(`  Navigating to: ${url}`);
