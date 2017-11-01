@@ -10,7 +10,7 @@ export default async function captureModule(page: Puppeteer.Page, rootUrl: strin
     deviceList.screenshot.subPostPath = `Modules/${moduleItems.title}/${i+1}_${moduleItems.items[i].title}`;
     switch(moduleItems.items[i].type) {
       case 'page':
-        await capturePage(page, `${rootUrl}/${moduleItems.items[i].link}`, '#wiki_page_show > div.show-content.user_content', deviceList);
+        await capturePage(page, `${rootUrl}${moduleItems.items[i].link}`, '#wiki_page_show > div.show-content.user_content', deviceList);
         break;
       case 'link':
         break;

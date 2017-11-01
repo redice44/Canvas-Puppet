@@ -49,7 +49,12 @@ export async function captureCourse(page: Puppeteer.Page, rootUrl: string, cours
 }
 
 export async function captureCourseList(page: Puppeteer.Page, rootUrl: string, courses: Course[], deviceList: DeviceList, enumerate: boolean = true) {
-  for(let i = 0; i < courses.length; i++) {
+  for (let i = 0; i < courses.length; i++) {
     await captureCourse(page, rootUrl, courses[i], deviceList, enumerate);
   }
+}
+
+export async function captureAllCourses(page: Puppeteer.Page, rootUrl: string, deviceList: DeviceList, enumerate: boolean = true) {
+  const courses = await courseList(page, rootUrl);
+  await captureCourseList(page, rootUrl, courses, deviceList, enumerate);
 }
