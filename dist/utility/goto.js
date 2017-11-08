@@ -24,7 +24,10 @@ function goto(page, url, retry = 2) {
                 }
                 else {
                     console.log();
-                    throw new navigation_1.NavigationError(e.message, navigation_1.NavigationErrorCodes.FAILED, url);
+                    let error = new Error(e.message);
+                    error.code = navigation_1.NavigationErrorCodes.FAILED;
+                    error.url = url;
+                    throw error;
                 }
             }
             else if (e.message.includes('Navigation Timeout Exceeded')) {
@@ -35,7 +38,10 @@ function goto(page, url, retry = 2) {
                 }
                 else {
                     console.log();
-                    throw new navigation_1.NavigationError(e.message, navigation_1.NavigationErrorCodes.TIMEOUT, url);
+                    let error = new Error(e.messsage);
+                    error.code = navigation_1.NavigationErrorCodes.TIMEOUT;
+                    error.url = url;
+                    throw error;
                 }
             }
             else {

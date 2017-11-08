@@ -1,6 +1,6 @@
 {
   "name": "canvas-puppet",
-  "version": "0.0.1",
+  "version": "0.0.1a",
   "description": "",
   "main": "dist/index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 import * as Puppeteer from 'puppeteer';
 
-import { NavigationError } from '../src/errors/navigation';
+import { NavigationErrorCodes } from '../src/errors/navigation';
 import goto from '../src/utility/goto';
 
 test();
@@ -10,23 +10,40 @@ async function test() {
   const page: Puppeteer.Page = await browser.newPage();
 
   try {
-    await goto(page, 'http://notapage.ojsfoj', 1);
+    await goto(page, 'http://notapage.ojsfoj', 0);
+    console.log('Fail');
+    throw new Error('Should have thrown error');
   } catch (e) {
-    if (e instanceof NavigationError) {
-      console.log(`Unable to navigate to ${e.url}`)
+    // Expected
+    if (e.code && e.code === NavigationErrorCodes.FAILED) {
+      console.log('Pass');
     } else {
-      console.log(`Uncaught error ${e.message}`);
+      console.log('Fail');
+      throw e;
+    }
+  }
+
+  try {
+    await goto(page, 'http://notapage.ojsfoj', 0);
+    console.log('Fail');
+    throw new Error('Should have thrown error');
+  } catch (e) {
+    // Expected
+    if (e.code && e.code === NavigationErrorCodes.TIMEOUT) {
+      console.log('Pass');
+    } else {
+      console.log('Fail');
+      throw e;
     }
   }
 
   try {
     await goto(page, 'https://www.google.com');
+    // Expected
+    console.log('Pass');
   } catch (e) {
-    if (e instanceof NavigationError) {
-      console.log(`Unable to navigate to ${e.url}`)
-    } else {
-      console.log(`Uncaught error ${e.message}`);
-    }
+    console.log('Fail');
+    throw e;
   }
 
   await page.close();

@@ -23,20 +23,31 @@ export default async function login(page: Puppeteer.Page, loginInfo: LoginInfo) 
   } catch (e) {
     if (e.code && e.code === 'ERR_ASSERTION') {
       console.log(`    DOMError: ${e.message}`);
-      throw new DOMError(e.message, DOMErrorCodes.SELECTOR_NOT_FOUND, e.message.substr(28));
+      let error: DOMError = new Error(e.message) as DOMError;
+      error.code = DOMErrorCodes.SELECTOR_NOT_FOUND;
+      error.selector = e.message.substr(28);
+      throw error;
     } else if (e.message.includes('Evaluation failed: DOMException') && e.message.includes('The provided selector is empty.')) {
       console.log(`    DOMError: Empty Selector`);
-      throw new DOMError(e.message.split('\n')[0], DOMErrorCodes.EMPTY_SELECTOR);
+      let error: DOMError = new Error(e.message.split('\n')[0]) as DOMError;
+      error.code = DOMErrorCodes.EMPTY_SELECTOR;
+      throw error;
     } else if (e.message.includes('Navigation Timeout Exceeded')) {
       console.log(`    Navigation Error: Timed out`);
-      throw new NavigationError(e.message, NavigationErrorCodes.TIMEOUT, page.url());
+      let error: NavigationError = new Error(e.message) as NavigationError;
+      error.code = NavigationErrorCodes.TIMEOUT;
+      error.url = page.url();
+      throw error;
     }
     throw e;
   }
 
   if (page.url() !== loginInfo.expectedLanding) {
     console.log(`    Navigation Error: Unexpected Landing Page`);
-    throw new NavigationError(`Unexpected Landing Page`, NavigationErrorCodes.UNEXPECTED_DESTINATION, page.url());
+    let error: NavigationError = new Error(`Unexpected Landing Page`) as NavigationError;
+    error.code = NavigationErrorCodes.UNEXPECTED_DESTINATION;
+    error.url = page.url();
+    throw error;
   }
   console.log('Logged In\n');
 }

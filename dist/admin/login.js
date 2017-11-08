@@ -26,21 +26,32 @@ function login(page, loginInfo) {
         catch (e) {
             if (e.code && e.code === 'ERR_ASSERTION') {
                 console.log(`    DOMError: ${e.message}`);
-                throw new DOM_1.DOMError(e.message, DOM_1.DOMErrorCodes.SELECTOR_NOT_FOUND, e.message.substr(28));
+                let error = new Error(e.message);
+                error.code = DOM_1.DOMErrorCodes.SELECTOR_NOT_FOUND;
+                error.selector = e.message.substr(28);
+                throw error;
             }
             else if (e.message.includes('Evaluation failed: DOMException') && e.message.includes('The provided selector is empty.')) {
                 console.log(`    DOMError: Empty Selector`);
-                throw new DOM_1.DOMError(e.message.split('\n')[0], DOM_1.DOMErrorCodes.EMPTY_SELECTOR);
+                let error = new Error(e.message.split('\n')[0]);
+                error.code = DOM_1.DOMErrorCodes.EMPTY_SELECTOR;
+                throw error;
             }
             else if (e.message.includes('Navigation Timeout Exceeded')) {
                 console.log(`    Navigation Error: Timed out`);
-                throw new navigation_1.NavigationError(e.message, navigation_1.NavigationErrorCodes.TIMEOUT, page.url());
+                let error = new Error(e.message);
+                error.code = navigation_1.NavigationErrorCodes.TIMEOUT;
+                error.url = page.url();
+                throw error;
             }
             throw e;
         }
         if (page.url() !== loginInfo.expectedLanding) {
             console.log(`    Navigation Error: Unexpected Landing Page`);
-            throw new navigation_1.NavigationError(`Unexpected Landing Page`, navigation_1.NavigationErrorCodes.UNEXPECTED_DESTINATION, page.url());
+            let error = new Error(`Unexpected Landing Page`);
+            error.code = navigation_1.NavigationErrorCodes.UNEXPECTED_DESTINATION;
+            error.url = page.url();
+            throw error;
         }
         console.log('Logged In\n');
     });
