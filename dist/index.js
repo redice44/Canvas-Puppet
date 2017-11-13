@@ -13,6 +13,16 @@ const courseList_1 = require("./admin/courseList");
 const moduleList_1 = require("./admin/moduleList");
 const frontPage_1 = require("./capture/frontPage");
 const module_1 = require("./capture/module");
+const _QuestionBank_ = require("./quiz/questionBank");
+exports.QuestionBank = {
+    goto: _QuestionBank_.goto,
+    gotoQuestionBank: _QuestionBank_.gotoQuestionBank,
+    gotoQuestionBankMain: _QuestionBank_.gotoQuestionBankMain,
+    getBanks: _QuestionBank_.getBanks,
+    getQuestions: _QuestionBank_.getQuestions,
+    createBank: _QuestionBank_.createBank,
+    createQuestion: _QuestionBank_.createQuestion
+};
 function login(page, loginInfo) {
     return __awaiter(this, void 0, void 0, function* () {
         yield login_1.default(page, loginInfo);

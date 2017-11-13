@@ -5,11 +5,22 @@ import _courseList_ from './admin/courseList';
 import _moduleList_ from './admin/moduleList';
 import _frontPage_ from './capture/frontPage';
 import _captureModule_ from './capture/module';
+import * as _QuestionBank_ from './quiz/questionBank';
 
 import { Course } from './interfaces/course';
 import { DeviceList } from './interfaces/device';
 import { LoginInfo } from './interfaces/credentials';
 import { ModuleItems } from './interfaces/module';
+
+export const QuestionBank = {
+  goto: _QuestionBank_.goto,
+  gotoQuestionBank: _QuestionBank_.gotoQuestionBank,
+  gotoQuestionBankMain: _QuestionBank_.gotoQuestionBankMain,
+  getBanks: _QuestionBank_.getBanks,
+  getQuestions: _QuestionBank_.getQuestions,
+  createBank: _QuestionBank_.createBank,
+  createQuestion: _QuestionBank_.createQuestion
+};
 
 export async function login(page: Puppeteer.Page, loginInfo: LoginInfo) {
   await _login_(page, loginInfo);
