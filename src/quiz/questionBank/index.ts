@@ -14,7 +14,7 @@ export async function goto(page: Puppeteer.Page, rootUrl: string, course: Course
 
 export async function gotoQuestionBank(page: Puppeteer.Page, rootUrl: string, course: Course, qBank: QuestionBank) {
   const url = `${rootUrl}/courses/${course.id}/question_banks/${qBank.id}`;
-  console.log(qBank);
+  // console.log(qBank);
   await _goto_(page, url);
 }
 
@@ -125,14 +125,14 @@ export async function createQuestion(page: Puppeteer.Page, question: Question) {
   while (answerInputs < question.answers.length) {
     await page.click(s.anotherA);
     answerInputs++;
-    console.log('adding answer');
+    // console.log('adding answer');
   }
 
   while (answerInputs > question.answers.length) {
     await page.click(`${s.answers}:nth-child(${answerInputs})`);
     await page.click(s.deleteA.replace('INDEX', answerInputs));
     answerInputs--;
-    console.log('removing answer');
+    // console.log('removing answer');
   }
 
   for (let i = 1; i <= question.answers.length; i++) {
