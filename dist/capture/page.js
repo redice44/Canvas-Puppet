@@ -18,7 +18,6 @@ function capturePage(page, pageUrl, selector, deviceList) {
             const content = yield emulateElement_1.default(page, device.device, selector);
             yield ss_1.default(content, deviceList.screenshot, device.name);
         }
-        console.log();
     });
 }
 exports.default = capturePage;

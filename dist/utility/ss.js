@@ -11,7 +11,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mkdirp = require("mkdirp");
 function ss(el, ss, deviceName) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(`    Generating Screenshot: ${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`);
+        if (!process.env.RUN_SILENT) {
+            console.log(`    Generating Screenshot: ${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`);
+        }
         try {
             yield el.screenshot({
                 path: `${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`
@@ -25,7 +27,6 @@ function ss(el, ss, deviceName) {
                 });
             }
             else {
-                console.log(e);
                 throw e;
             }
         }

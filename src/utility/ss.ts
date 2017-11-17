@@ -4,7 +4,9 @@ import * as Puppeteer from 'puppeteer';
 import { Screenshot } from '../interfaces/device';
 
 export default async function ss(el: Puppeteer.ElementHandle, ss: Screenshot, deviceName: string) {
-  console.log(`    Generating Screenshot: ${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`);
+  if ( !process.env.RUN_SILENT ) {
+    console.log(`    Generating Screenshot: ${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`);
+  }
 
   try {
     await el.screenshot({
@@ -17,7 +19,6 @@ export default async function ss(el: Puppeteer.ElementHandle, ss: Screenshot, de
         path: `${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`
       });
     } else {
-      console.log(e);
       throw e;
     }
   }

@@ -12,5 +12,5 @@ export default async function capturePage(page: Puppeteer.Page, pageUrl: string,
     const content: Puppeteer.ElementHandle = await emulateElement(page, device.device, selector);
     await ss(content, deviceList.screenshot, device.name);
   }
-  console.log();
+
 }

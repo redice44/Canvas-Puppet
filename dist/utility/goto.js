@@ -11,19 +11,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const navigation_1 = require("../errors/navigation");
 function goto(page, url, retry = 2) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log(`  Navigating to: ${url}`);
+        if (!process.env.RUN_SILENT) {
+            console.log(`  Navigating to: ${url}`);
+        }
         try {
             yield page.goto(url);
         }
         catch (e) {
             if (e.message === `Failed to navigate: ${url}`) {
-                console.log(`    Failed to navigate: ${url}`);
+                if (!process.env.RUN_SILENT) {
+                    console.log(`    Failed to navigate: ${url}`);
+                }
                 if (retry > 0) {
-                    console.log(`    Retrying...\n`);
+                    if (!process.env.RUN_SILENT) {
+                        console.log(`    Retrying...\n`);
+                    }
                     yield goto(page, url, retry - 1);
                 }
                 else {
-                    console.log();
+                    if (!process.env.RUN_SILENT) {
+                        console.log();
+                    }
                     let error = new Error(e.message);
                     error.code = navigation_1.NavigationErrorCodes.FAILED;
                     error.url = url;
@@ -31,13 +39,19 @@ function goto(page, url, retry = 2) {
                 }
             }
             else if (e.message.includes('Navigation Timeout Exceeded')) {
-                console.log(`    Timed out navigating to: ${url}`);
+                if (!process.env.RUN_SILENT) {
+                    console.log(`    Timed out navigating to: ${url}`);
+                }
                 if (retry > 0) {
-                    console.log(`    Retrying...\n`);
+                    if (!process.env.RUN_SILENT) {
+                        console.log(`    Retrying...\n`);
+                    }
                     yield goto(page, url, retry - 1);
                 }
                 else {
-                    console.log();
+                    if (!process.env.RUN_SILENT) {
+                        console.log();
+                    }
                     let error = new Error(e.messsage);
                     error.code = navigation_1.NavigationErrorCodes.TIMEOUT;
                     error.url = url;

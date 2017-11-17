@@ -1,3 +1,11 @@
+# Version 0.0.2b
+
+- Logs will only run if process.env.RUN_SILENT is false.
+
+# Version 0.0.2a
+
+- Silences a few logs
+
 # Version 0.0.2
 
 - Question bank creation

@@ -23,7 +23,7 @@ exports.goto = goto;
 function gotoQuestionBank(page, rootUrl, course, qBank) {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `${rootUrl}/courses/${course.id}/question_banks/${qBank.id}`;
-        console.log(qBank);
+        // console.log(qBank);
         yield goto_1.default(page, url);
     });
 }
@@ -134,13 +134,13 @@ function createQuestion(page, question) {
         while (answerInputs < question.answers.length) {
             yield page.click(s.anotherA);
             answerInputs++;
-            console.log('adding answer');
+            // console.log('adding answer');
         }
         while (answerInputs > question.answers.length) {
             yield page.click(`${s.answers}:nth-child(${answerInputs})`);
             yield page.click(s.deleteA.replace('INDEX', answerInputs));
             answerInputs--;
-            console.log('removing answer');
+            // console.log('removing answer');
         }
         for (let i = 1; i <= question.answers.length; i++) {
             yield page.click(s.answerInput.replace('INDEX', '' + i));
