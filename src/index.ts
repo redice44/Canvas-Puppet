@@ -7,13 +7,18 @@ import _frontPage_ from './capture/frontPage';
 import _captureModule_ from './capture/module';
 import * as _QuestionBank_ from './quiz/questionBank';
 
-import { navToPages as _pageNav_ } from './page/nav';
+import {
+  navToPage as _pageNav_,
+  navToPages as _pagesNav_
+} from './page/nav';
+import _getPage_ from './page/getPage';
 import _getPages_ from './page/getPages';
 
 import { Course } from './interfaces/course';
 import { DeviceList } from './interfaces/device';
 import { LoginInfo } from './interfaces/credentials';
 import { ModuleItems } from './interfaces/module';
+import { Page } from './interfaces/page';
 
 export const QuestionBank = {
   goto: _QuestionBank_.goto,
@@ -39,8 +44,30 @@ export async function captureFrontPage(page: Puppeteer.Page, rootUrl: string, co
 
 export async function pageList( page: Puppeteer.Page, rootUrl: string, course: Course ) {
 
-  await _pageNav_( page, rootUrl, course );
+  await _pagesNav_( page, rootUrl, course );
   return await _getPages_( page );
+
+}
+
+export async function getPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
+
+  await _pageNav_( page, rootUrl, course, contentPage );
+  return await _getPage_( page );
+
+}
+
+export async function getAllPages( page: Puppeteer.Page, rootUrl: string, course: Course ) {
+
+  const pList = await pageList( page, rootUrl, course );
+  const pages = [];
+
+  for ( let i = 0; i < pList.length; i++ ) {
+
+    pages.push( await getPage( page, rootUrl, course, pList[ i ] ) );
+
+  }
+
+  return pages;
 
 }
 
