@@ -7,6 +7,9 @@ import _frontPage_ from './capture/frontPage';
 import _captureModule_ from './capture/module';
 import * as _QuestionBank_ from './quiz/questionBank';
 
+import _pageNav_ from './page/nav';
+import _getPages_ from './page';
+
 import { Course } from './interfaces/course';
 import { DeviceList } from './interfaces/device';
 import { LoginInfo } from './interfaces/credentials';
@@ -32,6 +35,13 @@ export async function courseList(page: Puppeteer.Page, rootUrl: string, includeT
 
 export async function captureFrontPage(page: Puppeteer.Page, rootUrl: string, course: Course, deviceList: DeviceList) {
   await _frontPage_(page, rootUrl, course, deviceList);
+}
+
+export async function pageList( page: Puppeteer.Page, rootUrl: string, course: Course ) {
+
+  await _pageNav_( page, rootUrl, course );
+  await _getPages_( page );
+
 }
 
 export async function moduleList(page: Puppeteer.Page, rootUrl: string, course: Course): Promise<ModuleItems[]> {
