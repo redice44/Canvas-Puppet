@@ -2,7 +2,7 @@ import * as Puppeteer from 'puppeteer';
 
 export default async function getPages( page: Puppeteer.Page ) {
 
-  const r = await page.evaluate(() => {
+  return await page.evaluate(() => {
 
     let pages: NodeListOf < Element > = document.querySelectorAll( '#content > div > div.index-content-container > div > table > tbody > tr' );
     let r = [];
@@ -24,7 +24,5 @@ export default async function getPages( page: Puppeteer.Page ) {
     return r;
 
   });
-
-  return r;
 
 }

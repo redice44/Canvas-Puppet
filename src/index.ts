@@ -40,7 +40,7 @@ export async function captureFrontPage(page: Puppeteer.Page, rootUrl: string, co
 export async function pageList( page: Puppeteer.Page, rootUrl: string, course: Course ) {
 
   await _pageNav_( page, rootUrl, course );
-  await _getPages_( page );
+  return await _getPages_( page );
 
 }
 

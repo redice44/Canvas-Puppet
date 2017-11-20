@@ -10,13 +10,15 @@ import { Course } from '../src/interfaces/course';
 test();
 
 async function test() {
-  const browser: Puppeteer.Browser = await Puppeteer.launch( { headless: true } );
+  const browser: Puppeteer.Browser = await Puppeteer.launch( { headless: false } );
   const page: Puppeteer.Page = await browser.newPage();
 
   await CanvasPuppet.login(page, loginInfo);
   const courseList: Course[] = await CanvasPuppet.courseList(page, lmsInfo.url);
 
-  await CanvasPuppet.pageList(page, lmsInfo.url, courseList[0]);
+  const pageList = await CanvasPuppet.pageList(page, lmsInfo.url, courseList[0]);
+
+  console.log( pageList );
 
   await page.close();
   await browser.close();
