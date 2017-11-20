@@ -1,6 +1,8 @@
 import * as Puppeteer from 'puppeteer';
 
-export default async function getPages( page: Puppeteer.Page ) {
+import { Page } from '../interfaces/page';
+
+export default async function getPages( page: Puppeteer.Page ): Promise < Page[] >  {
 
   return await page.evaluate(() => {
 
@@ -10,12 +12,12 @@ export default async function getPages( page: Puppeteer.Page ) {
     for ( let i = 0; i < pages.length; i++ ) {
 
       let title = pages[ i ].querySelector( 'td:nth-child(1) > a' ).innerHTML.trim();
-      let link = pages[ i ].querySelector( 'td:nth-child(1) > a' ).getAttribute( 'href' );
+      let id = pages[ i ].querySelector( 'td:nth-child(1) > a' ).id.split( '_' );
 
       r.push( {
 
         title: title,
-        link: link
+        id: id[ id.length - 1 ]
 
       } );
 

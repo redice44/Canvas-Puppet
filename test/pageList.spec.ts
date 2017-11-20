@@ -10,7 +10,7 @@ import { Course } from '../src/interfaces/course';
 test();
 
 async function test() {
-  const browser: Puppeteer.Browser = await Puppeteer.launch( { headless: false } );
+  const browser: Puppeteer.Browser = await Puppeteer.launch( { headless: true } );
   const page: Puppeteer.Page = await browser.newPage();
 
   await CanvasPuppet.login(page, loginInfo);
@@ -18,7 +18,7 @@ async function test() {
 
   const pageList = await CanvasPuppet.pageList(page, lmsInfo.url, courseList[0]);
 
-  console.log( pageList );
+  console.log( pageList.length );
 
   await page.close();
   await browser.close();
