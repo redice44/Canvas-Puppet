@@ -8,7 +8,7 @@ import _captureModule_ from './capture/module';
 import * as _QuestionBank_ from './quiz/questionBank';
 
 import _pageNav_ from './page/nav';
-import _getPages_ from './page';
+import _getPages_ from './page/getPages';
 
 import { Course } from './interfaces/course';
 import { DeviceList } from './interfaces/device';

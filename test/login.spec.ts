@@ -10,6 +10,7 @@ import { DOMErrorCodes } from '../src/errors/DOM';
 test();
 
 async function test() {
+  process.env.RUN_SILENT = '0';
   let customLoginInfo;
 
   customLoginInfo = copyInfo(loginInfo);

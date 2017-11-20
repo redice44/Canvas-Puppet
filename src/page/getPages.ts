@@ -25,6 +25,6 @@ export default async function getPages( page: Puppeteer.Page ) {
 
   });
 
-  console.log( r );
+  return r;
 
 }

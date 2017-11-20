@@ -7,6 +7,6 @@ export default async function navToQuestionBanks( page: Puppeteer.Page, rootUrl:
 
   const url = `${rootUrl}/courses/${course.id}/pages`;
 
-  await goto( page, url );
+  await goto( page, url, { waitUntil: 'networkidle' } );
 
 }

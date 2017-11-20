@@ -2,12 +2,12 @@ import * as Puppeteer from 'puppeteer';
 
 import { NavigationError, NavigationErrorCodes } from '../errors/navigation';
 
-export default async function goto(page: Puppeteer.Page, url: string, retry: number = 2) {
+export default async function goto(page: Puppeteer.Page, url: string, opts: Puppeteer.NavigationOptions = {}, retry: number = 2) {
   if ( !process.env.RUN_SILENT ) {
     console.log(`  Navigating to: ${url}`);
   }
   try {
-    await page.goto(url);
+    await page.goto(url, opts);
   } catch (e) {
     if (e.message === `Failed to navigate: ${url}`) {
       if ( !process.env.RUN_SILENT ) {
@@ -17,7 +17,7 @@ export default async function goto(page: Puppeteer.Page, url: string, retry: num
         if ( !process.env.RUN_SILENT ) {
           console.log(`    Retrying...\n`);
         }
-        await goto(page, url, retry-1);
+        await goto(page, url, opts, retry-1);
       } else {
         if ( !process.env.RUN_SILENT ) {
           console.log();
@@ -35,7 +35,7 @@ export default async function goto(page: Puppeteer.Page, url: string, retry: num
         if ( !process.env.RUN_SILENT ) {
           console.log(`    Retrying...\n`);
         }
-        await goto(page, url, retry-1);
+        await goto(page, url, opts, retry-1);
       } else {
         if ( !process.env.RUN_SILENT ) {
           console.log();
