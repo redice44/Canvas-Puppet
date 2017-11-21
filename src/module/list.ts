@@ -1,58 +1,84 @@
 import * as Puppeteer from 'puppeteer';
 
 import { Course } from '../interfaces/course';
-import { subModuleItem, ModuleItems } from '../interfaces/module';
-import { selectors as moduleSelectors, itemTypes } from '../config/selectors/modules';
+import { subModuleItem, ModuleItems } from './interfaces';
+import { selectors, itemTypes } from './selectors';
 
-import goto from '../utility/goto';
+export default async function getModuleList( page: Puppeteer.Page, course: Course ): Promise < ModuleItems[] > {
 
-export default async function getModuleList(page: Puppeteer.Page, rootUrl: string, course: Course): Promise<ModuleItems[]> {
-  const modulesUrl = `${rootUrl}/courses/${course.id}/modules`;
-  await goto(page, modulesUrl);
-  const numModules: number = await page.$$eval(moduleSelectors.primaryModules, modules => modules.length);
+  const numModules: number = await page.$$eval( selectors.primaryModules, modules => modules.length );
   const modules: ModuleItems[] = [];
 
-  for (let i = 1; i <= numModules; i++) {
-    modules.push(await getModule(page, i));
+  for ( let i = 1; i <= numModules; i++ ) {
+
+    modules.push( await getModule( page, i ) );
+
   }
 
   return modules;
+
 }
 
-async function getModule(page: Puppeteer.Page, index: number): Promise<ModuleItems> {
+async function getModule( page: Puppeteer.Page, index: number ): Promise < ModuleItems > {
+
   const moduleItems: ModuleItems = {
+
     title: '',
     items: []
-  };
-  moduleItems.title = await page.$eval(moduleSelectors.moduleTitle.replace('INDEX', ''+index), (el: HTMLElement) => el.innerHTML.trim());
-  const numItems: number = await page.$$eval(moduleSelectors.contentItems.replace('INDEX', ''+index), items => items.length);
-  // console.log(`  Module: ${moduleItems.title}`);
 
-  for (let i = 1; i <= numItems; i++) {
+  };
+
+  const moduleTitleSelector = selectors.moduleTitle.replace( 'INDEX', '' + index );
+  const moduleContentSelector = selectors.contentItems.replace( 'INDEX', '' + index );
+
+  moduleItems.title = await page.$eval( moduleTitleSelector, el => el.innerHTML.trim() );
+  const numItems = await page.$$eval( moduleContentSelector, items => items.length );
+
+  for ( let i = 1; i <= numItems; i++ ) {
+
     const item: subModuleItem = {
+
       title: '',
       link: '',
       type: ''
+
     }
-    item.title = await page.$eval(moduleSelectors.contentLink.replace('INDEX', ''+index).replace('INDEX2', ''+i), (el: HTMLElement) => el.innerHTML.trim());
-    item.link = await page.$eval(moduleSelectors.contentLink.replace('INDEX', ''+index).replace('INDEX2', ''+i) , (el: HTMLElement) => el.getAttribute('href').trim());
-    const itemClasses: string[] = await page.mainFrame().$eval(moduleSelectors.contentType.replace('INDEX', ''+index).replace('INDEX2', ''+i), (item: HTMLElement) => {
+
+    const titleSelector = selectors.contentLink.replace( 'INDEX', '' + index ).replace( 'INDEX2', '' + i );
+    const linkSelector = selectors.contentLink.replace( 'INDEX', '' + index ).replace( 'INDEX2', '' + i );
+    const contentSelector = selectors.contentType.replace( 'INDEX', '' + index ).replace( 'INDEX2', '' + i );
+
+    item.title = await page.$eval( titleSelector , ( el: HTMLElement ) => el.innerHTML.trim() );
+    item.link = await page.$eval( linkSelector , ( el: HTMLElement ) => el.getAttribute( 'href' ).trim() );
+
+    const itemClasses: string[] = await page.$eval( contentSelector, ( item: HTMLElement ) => {
+
       let classes = [];
-      for (let i = 0; i < item.classList.length; i++) {
-        classes.push(item.classList[i]);
+
+      for ( let i = 0; i < item.classList.length; i++ ) {
+
+        classes.push( item.classList[ i ] );
+
       }
+
       return classes;
+
     });
 
-    for (let i = 0; i < itemTypes.length; i++) {
-      if (itemClasses.includes(itemTypes[i].className)) {
-        item.type = itemTypes[i].type;
+    for ( let i = 0; i < itemTypes.length; i++ ) {
+
+      if ( itemClasses.includes( itemTypes[ i ].className ) ) {
+
+        item.type = itemTypes[ i ].type;
         break;
+
       }
     }
 
-    moduleItems.items.push(item);
+    moduleItems.items.push( item );
+
   }
 
   return moduleItems;
+
 }
