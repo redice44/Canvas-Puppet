@@ -21,9 +21,9 @@
   },
   "license": "GPL-3.0",
   "devDependencies": {
-    "@types/node": "^8.0.47",
-    "@types/puppeteer": "^0.12.1",
-    "typescript": "^2.5.3"
+    "@types/node": "^8.0.53",
+    "@types/puppeteer": "^0.12.4",
+    "typescript": "^2.6.1"
   },
   "dependencies": {
     "mkdirp": "^0.5.1",

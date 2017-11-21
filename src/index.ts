@@ -8,9 +8,11 @@ import _captureModule_ from './capture/module';
 import * as _QuestionBank_ from './quiz/questionBank';
 
 import {
+  navToNewPage as _pageNavNew_,
   navToPage as _pageNav_,
   navToPages as _pagesNav_
 } from './page/nav';
+import _createPage_ from'./page/createPage';
 import _getPage_ from './page/getPage';
 import _getPages_ from './page/getPages';
 
@@ -40,6 +42,24 @@ export async function courseList(page: Puppeteer.Page, rootUrl: string, includeT
 
 export async function captureFrontPage(page: Puppeteer.Page, rootUrl: string, course: Course, deviceList: DeviceList) {
   await _frontPage_(page, rootUrl, course, deviceList);
+}
+
+export async function createPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
+
+  await _pageNavNew_( page, rootUrl, course, contentPage );
+  await _createPage_( page, contentPage );
+
+}
+
+export async function createPages( page: Puppeteer.Page, rootUrl: string, course: Course, contentPages: Page[] ) {
+
+  for ( let i = 0; i < contentPages.length; i++ ) {
+
+    await _pageNavNew_( page, rootUrl, course, contentPages[ i ] );
+    await _createPage_( page, contentPages[ i ] );
+
+  }
+
 }
 
 export async function pageList( page: Puppeteer.Page, rootUrl: string, course: Course ) {

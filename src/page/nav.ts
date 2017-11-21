@@ -31,6 +31,14 @@ export async function navToPage( page: Puppeteer.Page, rootUrl: string, course: 
 
 }
 
+export async function navToNewPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
+
+  const url = `${rootUrl}/courses/${course.id}/pages/${contentPage.title.toString().split( ' ' ).join( '-' )}/edit`;
+
+  await goto( page, url, { waitUntil: 'networkidle' } );
+
+}
+
 async function loadMore( page: Puppeteer.Page ): Promise < boolean > {
 
   return await page.evaluate(() => {
