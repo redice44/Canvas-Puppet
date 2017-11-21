@@ -1,4 +1,4 @@
-export const selectors = {
+export default {
   tables: {
     current: '#my_courses_table',
     past: '#past_enrollments_table',

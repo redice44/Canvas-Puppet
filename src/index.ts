@@ -1,7 +1,8 @@
 import * as Puppeteer from 'puppeteer';
 
+import _course_ from './course';
+
 import _login_ from './admin/login';
-import _courseList_ from './admin/courseList';
 import _moduleList_ from './admin/moduleList';
 import _frontPage_ from './capture/frontPage';
 import _captureModule_ from './capture/module';
@@ -22,6 +23,8 @@ import { LoginInfo } from './interfaces/credentials';
 import { ModuleItems } from './interfaces/module';
 import { Page } from './interfaces/page';
 
+export const course = _course_;
+
 export const QuestionBank = {
   goto: _QuestionBank_.goto,
   gotoQuestionBank: _QuestionBank_.gotoQuestionBank,
@@ -34,10 +37,6 @@ export const QuestionBank = {
 
 export async function login(page: Puppeteer.Page, loginInfo: LoginInfo) {
   await _login_(page, loginInfo);
-}
-
-export async function courseList(page: Puppeteer.Page, rootUrl: string, includeTerms?: string[]): Promise<Course[]> {
-  return await _courseList_(page, rootUrl, includeTerms);
 }
 
 export async function captureFrontPage(page: Puppeteer.Page, rootUrl: string, course: Course, deviceList: DeviceList) {
