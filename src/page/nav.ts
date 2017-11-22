@@ -1,14 +1,20 @@
 import * as Puppeteer from 'puppeteer';
 
 import { Course } from '../interfaces/course';
-import { Page } from '../interfaces/page';
+import { Page } from './interfaces';
 import goto from '../utility/goto';
 
-export async function navToPages( page: Puppeteer.Page, rootUrl: string, course: Course ) {
+export default {
 
-  const url = `${rootUrl}/courses/${course.id}/pages`;
+  list: navToPageList,
+  page: navToPage,
+  new: navToNewPage
 
-  await goto( page, url, { waitUntil: 'networkidle' } );
+}
+
+async function navToPageList( page: Puppeteer.Page, rootUrl: string, course: Course ) {
+
+  await goto( page, `${rootUrl}/courses/${course.id}/pages`, { waitUntil: 'networkidle' } );
 
   let hasMore = await loadMore( page );
 
@@ -23,19 +29,15 @@ export async function navToPages( page: Puppeteer.Page, rootUrl: string, course:
 
 }
 
-export async function navToPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
+async function navToPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
 
-  const url = `${rootUrl}/courses/${course.id}/pages/${contentPage.id}`;
-
-  await goto( page, url, { waitUntil: 'networkidle' } );
+  await goto( page, `${rootUrl}/courses/${course.id}/pages/${contentPage.id}`, { waitUntil: 'networkidle' } );
 
 }
 
-export async function navToNewPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
+async function navToNewPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
 
-  const url = `${rootUrl}/courses/${course.id}/pages/${contentPage.title.toString().split( ' ' ).join( '-' )}/edit`;
-
-  await goto( page, url, { waitUntil: 'networkidle' } );
+  await goto( page, `${rootUrl}/courses/${course.id}/pages/${contentPage.title.split( ' ' ).join( '-' )}/edit`, { waitUntil: 'networkidle' } );
 
 }
 

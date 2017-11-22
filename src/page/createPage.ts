@@ -5,8 +5,6 @@ import { Page } from '../interfaces/page';
 export default async function createPage( page: Puppeteer.Page, contentPage: Page ) {
 
   await page.click( 'input#title' );
-  // await page.keyboard.press( 'Backspace' );
-  // await page.keyboard.type( contentPage.title );
   await page.keyboard.press( 'Tab' );
   await page.keyboard.press( 'Tab' );
   await page.keyboard.press( 'Enter' );
