@@ -1,10 +1,9 @@
 import * as Puppeteer from 'puppeteer';
 
-import { Course } from '../interfaces/course';
 import { subModuleItem, ModuleItems } from './interfaces';
 import { selectors, itemTypes } from './selectors';
 
-export default async function getModuleList( page: Puppeteer.Page, course: Course ): Promise < ModuleItems[] > {
+export default async function getModuleList( page: Puppeteer.Page ): Promise < ModuleItems[] > {
 
   const numModules: number = await page.$$eval( selectors.primaryModules, modules => modules.length );
   const modules: ModuleItems[] = [];

@@ -15,6 +15,6 @@ export default {
 async function _list_( page: Puppeteer.Page, rootUrl: string, course: Course ): Promise < ModuleItems[] > {
 
   await navigation.list( page, rootUrl, course );
-  return await getModuleList( page, course );
+  return await getModuleList( page );
 
 }
