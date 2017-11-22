@@ -24,19 +24,19 @@ export async function gotoQuestionBankMain(page: Puppeteer.Page, rootUrl: string
   await _goto_(page, url);
 }
 
-export async function getBanks(page: Puppeteer.Page): Promise<QuestionBank[]> {
-  const s = {
-    banks: '#questions > .question_bank'
-  };
-  return await page.evaluate(selectors => {
-    let bankEls: NodeListOf<Element> = document.querySelectorAll(selectors.banks);
-    let banks: QuestionBank[] = [];
-    for (let i = 0; i < bankEls.length; i++) {
-      banks.push({id: bankEls[i].id.substr(14)});
-    }
-    return banks;
-  }, s);
-}
+// export async function getBanks(page: Puppeteer.Page): Promise<QuestionBank[]> {
+//   const s = {
+//     banks: '#questions > .question_bank'
+//   };
+//   return await page.evaluate(selectors => {
+//     let bankEls: NodeListOf<Element> = document.querySelectorAll(selectors.banks);
+//     let banks: QuestionBank[] = [];
+//     for (let i = 0; i < bankEls.length; i++) {
+//       banks.push({id: bankEls[i].id.substr(14)});
+//     }
+//     return banks;
+//   }, s);
+// }
 
 export async function getQuestions(page: Puppeteer.Page)/*: Promise<Question[]>*/ {
   const s = {

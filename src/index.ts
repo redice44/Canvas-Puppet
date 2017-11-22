@@ -4,6 +4,7 @@ import _admin_ from './admin';
 import _course_ from './course';
 import _module_ from './module';
 import _page_ from './page';
+import _questionBank_ from './questionBank';
 
 
 // import _login_ from './admin/login';
@@ -31,6 +32,7 @@ export const admin = _admin_;
 export const course = _course_;
 export const module = _module_;
 export const page = _page_;
+export const questionBank = _questionBank_;
 
 // export const QuestionBank = {
 //   goto: _QuestionBank_.goto,
