@@ -14,7 +14,7 @@ async function test() {
   const browser: Puppeteer.Browser = await Puppeteer.launch( { headless: argOpts.headless } );
   const page: Puppeteer.Page = await browser.newPage();
 
-  await CanvasPuppet.login( page, loginInfo );
+  await CanvasPuppet.admin.login( page, loginInfo );
   const courseList =  await CanvasPuppet.course.list( page, lmsInfo.url );
   const moduleList = await CanvasPuppet.module.list( page, lmsInfo.url, courseList[ 0 ] );
 
