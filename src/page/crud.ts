@@ -1,8 +1,14 @@
 import * as Puppeteer from 'puppeteer';
 
-import { Page } from '../interfaces/page';
+import { Page } from './interfaces';
 
-export default async function getPage( page: Puppeteer.Page ): Promise < Page > {
+export default {
+
+  get: get,
+
+}
+
+async function get( page: Puppeteer.Page ): Promise < Page > {
 
   return await page.evaluate(() => {
 
@@ -20,3 +26,4 @@ export default async function getPage( page: Puppeteer.Page ): Promise < Page > 
   });
 
 }
+
