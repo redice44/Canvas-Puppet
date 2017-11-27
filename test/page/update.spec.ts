@@ -31,8 +31,12 @@ async function test() {
   await CanvasPuppet.admin.login( page, loginInfo );
   const courseList =  await CanvasPuppet.course.list( page, lmsInfo.url );
 
-  const newPage = await CanvasPuppet.page.create( page, lmsInfo.url, courseList[ courseIndex ], contentPage );
-  await CanvasPuppet.page.delete( page, lmsInfo.url, courseList[ courseIndex ], newPage );
+  let newPage = await CanvasPuppet.page.create( page, lmsInfo.url, courseList[ courseIndex ], contentPage );
+  newPage.title = 'a new title';
+  newPage.content = '<p>Updated!</p>';
+  newPage = await CanvasPuppet.page.update( page, lmsInfo.url, courseList[ courseIndex ], newPage );
+  console.log( JSON.stringify( newPage ) );
+
 
   if ( argOpts.finish ) {
 

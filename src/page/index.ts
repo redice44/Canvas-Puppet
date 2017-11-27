@@ -12,7 +12,8 @@ export default {
   create: _create_,
   delete: _delete_,
   get: _get_,
-  list: _list_
+  list: _list_,
+  update: _update_
 
 };
 
@@ -42,5 +43,13 @@ async function _delete_( page: Puppeteer.Page, rootUrl: string, course: Course, 
 
   await navigation.page( page, rootUrl, course, contentPage );
   await crud.delete( page );
+
+}
+
+async function _update_( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ): Promise < Page > {
+
+  await navigation.edit( page, rootUrl, course, contentPage );
+  await crud.update( page, contentPage );
+  return await crud.get( page );
 
 }

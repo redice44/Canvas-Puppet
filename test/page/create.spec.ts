@@ -34,7 +34,7 @@ async function test() {
   try {
 
     const newPage = await CanvasPuppet.page.create( page, lmsInfo.url, courseList[ courseIndex ], contentPage );
-    console.log( newPage );
+    console.log( JSON.stringify( newPage ) );
 
   } catch ( e ) {
 

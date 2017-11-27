@@ -6,6 +6,7 @@ import goto from '../utility/goto';
 
 export default {
 
+  edit: navToEditPage,
   list: navToPageList,
   page: navToPage,
   create: navToNewPage
@@ -40,6 +41,18 @@ async function navToPage( page: Puppeteer.Page, rootUrl: string, course: Course,
 async function navToNewPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
 
   await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.title.split( ' ' ).join( '-' ) }/edit`, { waitUntil: 'networkidle' } );
+
+}
+
+async function navToEditPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
+
+  if ( !contentPage.id ) {
+
+    throw new Error( 'Page missing ID' );
+
+  }
+
+  await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.id }/edit`, { waitUntil: 'networkidle' } );
 
 }
 
