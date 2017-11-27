@@ -4,7 +4,9 @@ export default function () {
   const argv = getArgv();
   const opts = {
 
-    headless: true,
+    devTools: false,
+    finish: true,
+    headless: true
 
   }
 
@@ -13,11 +15,23 @@ export default function () {
     switch ( argv[ i ] ) {
 
       case '-h':
+      case '--headless':
         opts.headless = false;
         break;
 
       case '-s':
+      case '--silent':
         process.env.RUN_SILENT = '1';
+        break;
+
+      case '-f':
+      case '--finish':
+        opts.finish = false;
+        break;
+
+      case '-d':
+      case '--dev-tools':
+        opts.devTools = true;
         break;
 
     }

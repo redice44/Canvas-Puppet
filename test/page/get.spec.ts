@@ -14,7 +14,13 @@ async function test() {
   const pageIndex = 2;
 
   const argOpts = defaultArgs();
-  const browser: Puppeteer.Browser = await Puppeteer.launch( { headless: argOpts.headless } );
+  const browser: Puppeteer.Browser = await Puppeteer.launch( {
+
+    devtools: argOpts.devTools,
+    headless: argOpts.headless
+
+  } );
+
   const page: Puppeteer.Page = await browser.newPage();
 
   await CanvasPuppet.admin.login( page, loginInfo );
@@ -24,7 +30,10 @@ async function test() {
 
   console.log( JSON.stringify( contentPage ) );
 
-  await page.close();
-  await browser.close();
+  if ( argOpts.finish ) {
 
+    await page.close();
+    await browser.close();
+
+  }
 }
