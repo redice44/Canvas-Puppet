@@ -10,6 +10,7 @@ import { Page } from './interfaces';
 export default {
 
   create: _create_,
+  delete: _delete_,
   get: _get_,
   list: _list_
 
@@ -34,5 +35,12 @@ async function _create_( page: Puppeteer.Page, rootUrl: string, course: Course, 
   await navigation.create( page, rootUrl, course, contentPage );
   await crud.create( page, contentPage );
   return await crud.get( page );
+
+}
+
+async function _delete_( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
+
+  await navigation.page( page, rootUrl, course, contentPage );
+  await crud.delete( page );
 
 }

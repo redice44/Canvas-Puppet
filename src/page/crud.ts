@@ -5,7 +5,8 @@ import { Page } from './interfaces';
 export default {
 
   create: create,
-  get: get,
+  delete: del,
+  get: get
 
 }
 
@@ -45,6 +46,18 @@ async function create( page: Puppeteer.Page, contentPage: Page ) {
   await page.keyboard.press( 'Enter' );
   await page.keyboard.type( contentPage.content );
   await page.click ( '#content > form > div.form-actions.clearfix > div > button.btn.btn-primary.submit' );
+
+  await page.waitForNavigation();
+
+}
+
+async function del( page: Puppeteer.Page ) {
+
+  await page.click( '.header-bar-right > div > a.btn' );
+  await page.click( '.header-bar-right > div a.delete_page' );
+  await page.keyboard.press( 'Tab' );
+  await page.keyboard.press( 'Tab' );
+  await page.keyboard.press( '\r' );
 
   await page.waitForNavigation();
 

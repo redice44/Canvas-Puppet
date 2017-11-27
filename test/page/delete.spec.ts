@@ -13,7 +13,7 @@ async function test() {
   const courseIndex = 3;
   const contentPage = {
 
-    title: 'This is a test',
+    title: 'A test',
     content: '<p>Hello world</p>'
 
   };
@@ -31,16 +31,9 @@ async function test() {
   await CanvasPuppet.admin.login( page, loginInfo );
   const courseList =  await CanvasPuppet.course.list( page, lmsInfo.url );
 
-  try {
+  const newPage = await CanvasPuppet.page.create( page, lmsInfo.url, courseList[ courseIndex ], contentPage );
+  await CanvasPuppet.page.delete( page, lmsInfo.url, courseList[ courseIndex ], newPage );
 
-    const newPage = await CanvasPuppet.page.create( page, lmsInfo.url, courseList[ courseIndex ], contentPage );
-    console.log( newPage );
-
-  } catch ( e ) {
-
-    console.log( e.message );
-
-  }
 
   if ( argOpts.finish ) {
 
