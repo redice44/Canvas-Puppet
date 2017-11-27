@@ -11,7 +11,12 @@ test();
 async function test() {
 
   const courseIndex = 3;
-  const pageIndex = 2;
+  const contentPage = {
+
+    title: 'SSD Fs SDF',
+    content: '<p>Hello world</p>'
+
+  };
 
   const argOpts = defaultArgs();
   const browser: Puppeteer.Browser = await Puppeteer.launch( {
@@ -25,10 +30,17 @@ async function test() {
 
   await CanvasPuppet.admin.login( page, loginInfo );
   const courseList =  await CanvasPuppet.course.list( page, lmsInfo.url );
-  const pageList = await CanvasPuppet.page.list( page, lmsInfo.url, courseList[ courseIndex ] );
-  const contentPage = await CanvasPuppet.page.get( page, lmsInfo.url, courseList[ courseIndex ], pageList[ pageIndex ] );
 
-  console.log( JSON.stringify( contentPage ) );
+  try {
+
+    const newPage = await CanvasPuppet.page.create( page, lmsInfo.url, courseList[ courseIndex ], contentPage );
+    console.log( newPage );
+
+  } catch ( e ) {
+
+    console.log( e.message );
+
+  }
 
   if ( argOpts.finish ) {
 

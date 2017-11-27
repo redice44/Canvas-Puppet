@@ -8,7 +8,7 @@ export default {
 
   list: navToPageList,
   page: navToPage,
-  new: navToNewPage
+  create: navToNewPage
 
 }
 
@@ -26,6 +26,12 @@ async function navToPageList( page: Puppeteer.Page, rootUrl: string, course: Cou
 }
 
 async function navToPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
+
+  if ( !contentPage.id ) {
+
+    throw new Error( 'Page missing ID' );
+
+  }
 
   await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.id }`, { waitUntil: 'networkidle' } );
 
