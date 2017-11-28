@@ -4,3 +4,5 @@ export const allPages = {
   pageLink: 'td:nth-child(1) > a'
 
 };
+
+export const captureSelector = '#content-wrapper';

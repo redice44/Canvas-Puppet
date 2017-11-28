@@ -29,7 +29,7 @@ async function test() {
   const page: Puppeteer.Page = await browser.newPage();
 
   await CanvasPuppet.admin.login( page, loginInfo );
-  const courseList =  await CanvasPuppet.course.list( page, lmsInfo.url );
+  const courseList = await CanvasPuppet.course.list( page, lmsInfo.url );
 
   let newPage = await CanvasPuppet.page.create( page, lmsInfo.url, courseList[ courseIndex ], contentPage );
   newPage.title = 'a new title';

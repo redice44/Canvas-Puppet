@@ -1,10 +1,9 @@
 import * as Puppeteer from 'puppeteer';
 
 export interface Screenshot {
-  rootPath: string,
-  subPrePath: string,
-  subPostPath: string,
-  date: string
+  coursePath: string,
+  sectionPath: string,
+  uniquePath: string
 };
 
 export interface Device {
