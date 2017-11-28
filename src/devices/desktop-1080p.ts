@@ -1,6 +1,6 @@
 import * as Puppeteer from 'puppeteer';
 
-import { Device } from '../interfaces/device';
+import { Device } from './interfaces';
 
 export default async function getDevice(browser: Puppeteer.Browser): Promise<Device> {
   const browserUserAgent = await browser.version();
