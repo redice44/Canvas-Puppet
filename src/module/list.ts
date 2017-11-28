@@ -6,11 +6,18 @@ import { selectors, itemTypes } from './selectors';
 export default async function getModuleList( page: Puppeteer.Page ): Promise < Module[] > {
 
   const getTitle = ( moduleEl: HTMLElement ): string => moduleEl.querySelector( '.header span.name' ).innerHTML.trim();
-  const getModuleItem = ( moduleEl: HTMLElement ): ModuleItem => {
+  const getModuleItem = ( moduleEl: HTMLElement ): ModuleItem|null => {
+
+    if ( moduleEl.classList.contains( 'context_module_sub_header' ) ) {
+
+      return null;
+
+    }
 
     return {
 
-      id: parseInt( moduleEl.querySelector( '.ig-admin > span' ).getAttribute( 'data-module-item-id' ) )
+      id: parseInt( moduleEl.querySelector( '.ig-admin > span' ).getAttribute( 'data-module-item-id' ) ),
+      title: moduleEl.querySelector( '.ig-info span.locked_title' ).getAttribute( 'title' ).trim()
 
     }
 
@@ -27,7 +34,13 @@ export default async function getModuleList( page: Puppeteer.Page ): Promise < M
 
     for ( let j = 0; j < itemsEH.length; j++ ) {
 
-      items.push( await page.evaluate( getModuleItem, itemsEH[ j ] ) );
+      const item = await page.evaluate( getModuleItem, itemsEH[ j ] )
+
+      if ( item ) {
+
+        items.push( item );
+
+      }
 
     }
 
