@@ -1,26 +1,53 @@
 import * as Puppeteer from 'puppeteer';
 
-import { subModuleItem, ModuleItems } from './interfaces';
+import { ModuleItem, Module } from './interfaces';
 import { selectors, itemTypes } from './selectors';
 
-export default async function getModuleList( page: Puppeteer.Page ): Promise < ModuleItems[] > {
+export default async function getModuleList( page: Puppeteer.Page ): Promise < Module[] > {
 
-  const numModules: number = await page.$$eval( selectors.primaryModules, modules => modules.length );
-  const modules: ModuleItems[] = [];
+  const getTitle = ( moduleEl: HTMLElement ): string => moduleEl.querySelector( '.header span.name' ).innerHTML.trim();
+  const getModuleItem = ( moduleEl: HTMLElement ): ModuleItem => {
 
-  for ( let i = 1; i <= numModules; i++ ) {
+    return {
 
-    modules.push( await getModule( page, i ) );
+      id: parseInt( moduleEl.querySelector( '.ig-admin > span' ).getAttribute( 'data-module-item-id' ) )
+
+    }
 
   }
+
+  const modulesEH = await page.$$( selectors.primaryModules );
+  const modules = [];
+
+  for ( let i = 0;  i < modulesEH.length; i++ ) {
+
+    const title: string = await page.evaluate( getTitle, modulesEH[ i ] );
+    const itemsEH = await modulesEH[ i ].$$( 'ul.items > li' );
+    const items: ModuleItem[] = [];
+
+    for ( let j = 0; j < itemsEH.length; j++ ) {
+
+      items.push( await page.evaluate( getModuleItem, itemsEH[ j ] ) );
+
+    }
+
+    modules.push( {
+
+      title: title,
+      items: items
+
+    } );
+
+  }
+
 
   return modules;
 
 }
 
-async function getModule( page: Puppeteer.Page, index: number ): Promise < ModuleItems > {
+async function getModule( page: Puppeteer.Page, index: number ): Promise < Module > {
 
-  const moduleItems: ModuleItems = {
+  const moduleItems: Module = {
 
     title: '',
     items: []
@@ -35,7 +62,7 @@ async function getModule( page: Puppeteer.Page, index: number ): Promise < Modul
 
   for ( let i = 1; i <= numItems; i++ ) {
 
-    const item: subModuleItem = {
+    const item: ModuleItem = {
 
       title: '',
       link: '',

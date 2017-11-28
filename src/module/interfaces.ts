@@ -1,10 +1,15 @@
-export interface subModuleItem {
-  title: string,
-  link: string,
-  type: string
+import { Page } from '../page/interfaces';
+
+export interface ModuleItem {
+
+  id: number,
+  // data: Page
+
 }
 
-export interface ModuleItems {
+export interface Module {
+
   title: string,
-  items: subModuleItem[]
+  items: ModuleItem[]
+
 }
