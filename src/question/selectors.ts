@@ -40,6 +40,24 @@ export const deleteQuestion = {
 
 }
 
+export const updateQuestion = {
+
+  body: 'textarea.question_content',
+  link: '.links a.edit_question_link',
+  form: 'form.question_form',
+  questionTitle: '.header > input[name="question_name"]',
+  type: 'div > div.header > select',
+  answers: 'div.form_answers > div',
+  anotherA: 'div.add_answer > a',
+  deleteA: 'div.question_actions > a.delete_answer_link',
+  correctA: 'a.select_answer_link',
+  feedback: 'a.comment_focus',
+  feedbackBody: 'answer_comments textarea.editor-toggle',
+  htmlView: '.switch-views a.switch-views__link__html',
+  submitBtn: 'div.button-container > button.btn.btn-small.submit_button.btn-primary'
+
+}
+
 export const createQuestion = {
 
   addBtn: '#right-side .add_question_link',
