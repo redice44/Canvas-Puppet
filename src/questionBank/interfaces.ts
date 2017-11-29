@@ -1,6 +1,6 @@
 export interface QuestionBank {
 
-  id: string,
-  title?: string
+  id?: string,
+  title: string
 
 }

@@ -1,8 +1,8 @@
 import * as Puppeteer from 'puppeteer';
 
+import createBank from './create';
 import getBanks from './list';
 import navigation from './nav';
-
 
 import { Course } from '../course/interfaces';
 import { QuestionBank } from './interfaces';
@@ -10,9 +10,18 @@ import { QuestionBank } from './interfaces';
 
 export default {
 
+  create: _create_,
   list: _list_
 
 };
+
+
+async function _create_( page: Puppeteer.Page, rootUrl: string, course: Course, qBank: QuestionBank ) {
+
+  await navigation.list( page, rootUrl, course );
+  await createBank( page, qBank );
+
+}
 
 async function _list_( page: Puppeteer.Page, rootUrl: string, course: Course ): Promise < QuestionBank[] > {
 
