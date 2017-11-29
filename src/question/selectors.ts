@@ -33,3 +33,17 @@ export default {
   ]
 
 }
+
+export const createQuestion = {
+
+  addBtn: '#right-side .add_question_link',
+  type: 'form.question_form > div > div.header > select',
+  answers: 'form.question_form div.form_answers > div',
+  anotherA: 'form.question_form div.add_answer > a',
+  deleteA: 'form.question_form div.form_answers > div:nth-child(INDEX) div.question_actions > a.delete_answer_link',
+  answerInput: 'form.question_form div.form_answers > div:nth-child(INDEX) div.select_answer > input.disabled_answer',
+  submitBtn: 'form.question_form div.button-container > button.btn.btn-small.submit_button.btn-primary',
+  correctA: 'form.question_form div.form_answers > div:nth-child(INDEX) a.select_answer_link',
+  feedback: 'form.question_form div.form_answers > div:nth-child(INDEX) a.comment_focus'
+
+};
