@@ -29,7 +29,7 @@ export default async function getQuestions( page: Puppeteer.Page ): Promise < Qu
     for ( let i = 0; i < questions.length; i++ ) {
 
       const title = questions[ i ].querySelector( selectors.title ).innerHTML.trim();
-      const id = questions[ i ].id.split( '_' )[ 1 ];
+      const id = questions[ i ].querySelector( selectors.root ).id.split( '_' )[ 1 ];
       const text = questions[ i ].querySelector( selectors.text ).innerHTML.trim();
       const answersEl: NodeListOf < HTMLElement > = questions[ i ].querySelectorAll( selectors.answers );
       const answers: Answers[] = [];
