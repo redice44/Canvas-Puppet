@@ -13,7 +13,12 @@ async function test() {
   const courseId = 7;
   const qbId = 1;
   const argOpts = defaultArgs();
-  const browser: Puppeteer.Browser = await Puppeteer.launch( { headless: argOpts.headless } );
+  const browser: Puppeteer.Browser = await Puppeteer.launch( {
+
+    devtools: argOpts.devTools,
+    headless: argOpts.headless
+
+  } );
   const page: Puppeteer.Page = await browser.newPage();
 
   await CanvasPuppet.admin.login( page, loginInfo );
@@ -22,7 +27,11 @@ async function test() {
   const questionList = await CanvasPuppet.question.list( page, lmsInfo.url, courseList[ courseId ], questionBankList[ qbId ] );
   console.log( JSON.stringify( questionList ) );
 
-  await page.close();
-  await browser.close();
+  if ( argOpts.finish ) {
+
+    await page.close();
+    await browser.close();
+
+  }
 
 }

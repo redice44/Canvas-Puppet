@@ -5,6 +5,8 @@ import { LoginInfo } from './interfaces';
 import { DOMError, DOMErrorCodes } from '../errors/DOM';
 import { NavigationError, NavigationErrorCodes } from '../errors/navigation';
 
+import clickAndNav from '../utility/clickAndNav';
+
 export default async function login( page: Puppeteer.Page, loginInfo: LoginInfo ) {
 
   if ( !process.env.RUN_SILENT ) {
@@ -21,8 +23,7 @@ export default async function login( page: Puppeteer.Page, loginInfo: LoginInfo 
     await page.click( loginInfo.selectors.password );
     await page.keyboard.type( loginInfo.credentials.password );
 
-    await page.click( loginInfo.selectors.loginButton );
-    await page.waitForNavigation();
+    await clickAndNav( page, loginInfo.selectors.loginButton, { waitUntil: 'networkidle2' } );
 
   } catch ( e ) {
 
@@ -68,16 +69,32 @@ export default async function login( page: Puppeteer.Page, loginInfo: LoginInfo 
 
       }
 
-      let error: NavigationError = new Error( e.message ) as NavigationError;
+      if ( page.url() !== loginInfo.expectedLanding ) {
 
-      error.code = NavigationErrorCodes.TIMEOUT;
-      error.url = page.url();
+        console.log( page.url() );
 
-      throw error;
+        let error: NavigationError = new Error( e.message ) as NavigationError;
+
+        error.code = NavigationErrorCodes.TIMEOUT;
+        error.url = page.url();
+
+        throw error;
+
+      } else {
+
+        if ( !process.env.RUN_SILENT ) {
+
+          console.log( `    But page navigated successfully.` );
+
+        }
+
+      }
+
+    } else {
+
+      throw e;
 
     }
-
-    throw e;
 
   }
 
@@ -85,6 +102,7 @@ export default async function login( page: Puppeteer.Page, loginInfo: LoginInfo 
 
     if ( !process.env.RUN_SILENT ) {
 
+      console.log( page.url() );
       console.log( `    Navigation Error: Unexpected Landing Page` );
 
     }

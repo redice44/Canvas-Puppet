@@ -6,22 +6,7 @@ import selectors from './selectors';
 
 export default async function getQuestions( page: Puppeteer.Page ): Promise < Question[] > {
 
-  // const expandQuestions = async ( questions: NodeListOf < HTMLElement >, page, linkSelector, parentSelector ) => {
-
-  //   for ( let i = 0; i < questions.length; i++ ) {
-
-  //     if ( questions[ i ].querySelector( linkSelector ) ) {
-
-
-  //       await page.click( `${ parentSelector.replace( 'INDEX', ''+i ) } > ${ linkSelector }`);
-
-  //     }
-
-  //   }
-
-  // }
-
-  const extractQuestions = ( questions: NodeListOf < HTMLElement >, selectors, questionTypes ) => {
+  const extractQuestions = ( questions, selectors, questionTypes ) => {
 
     const getQuestionType = ( questionEl, questionTypes ) => {
 
@@ -79,7 +64,7 @@ export default async function getQuestions( page: Puppeteer.Page ): Promise < Qu
 
   };
 
-  const showDetails = ( checkboxEl: HTMLInputElement ) => {
+  const showDetails = ( checkboxEl ) => {
 
     if ( !checkboxEl.checked ) {
 
@@ -106,7 +91,6 @@ export default async function getQuestions( page: Puppeteer.Page ): Promise < Qu
 
   }
 
-  // @ts-ignore
   return await page.$$eval( selectors.list, extractQuestions, selectors.question, selectors.questionTypes );
 
 }

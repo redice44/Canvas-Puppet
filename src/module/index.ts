@@ -31,7 +31,7 @@ async function _capture_( page: Puppeteer.Page, rootUrl: string, course: Course,
 
     deviceList.screenshot.uniquePath = `${ '0'.repeat( digits - Math.floor( ( i + 1 ) / 10 ) ) }${ i+1 }_${ contentModule.items[ i ].title }/date`;
 
-    await navigation.moduleItem( page, rootUrl, course, contentModule.items[ i ], deviceList );
+    await navigation.moduleItem( page, rootUrl, course, contentModule.items[ i ] );
     await captureModuleItem( page, deviceList );
 
   }
