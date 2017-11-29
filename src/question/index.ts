@@ -1,6 +1,7 @@
 import * as Puppeteer from 'puppeteer';
 
 import createQuestion from './create';
+import deleteQuestion from './delete';
 import getQuestions from './list';
 import navigation from './nav';
 
@@ -12,6 +13,7 @@ import { Question } from './interfaces';
 export default {
 
   create: _create_,
+  delete: _delete_,
   list: _list_
 
 };
@@ -27,5 +29,12 @@ async function _create_( page: Puppeteer.Page, rootUrl: string, course: Course, 
 
   await navigation.list( page, rootUrl, course, qBank );
   await createQuestion( page, question );
+
+}
+
+async function _delete_( page: Puppeteer.Page, rootUrl: string, course: Course, qBank: QuestionBank, question: Question ) {
+
+  await navigation.list( page, rootUrl, course, qBank );
+  await deleteQuestion( page, question );
 
 }

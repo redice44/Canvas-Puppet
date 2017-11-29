@@ -34,6 +34,12 @@ export default {
 
 }
 
+export const deleteQuestion = {
+
+  link: '.links > a.delete_question_link'
+
+}
+
 export const createQuestion = {
 
   addBtn: '#right-side .add_question_link',
