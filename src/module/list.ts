@@ -6,6 +6,7 @@ import { selectors } from './selectors';
 export default async function getModuleList( page: Puppeteer.Page ): Promise < Module[] > {
 
   const getTitle = ( moduleEl: HTMLElement ): string => moduleEl.querySelector( '.header span.name' ).innerHTML.trim();
+  const getId = element => parseInt( element.getAttribute( 'data-module-id' ) );
   const getModuleItem = ( moduleEl: HTMLElement ): ModuleItem|null => {
 
     if ( moduleEl.classList.contains( 'context_module_sub_header' ) ) {
@@ -16,8 +17,10 @@ export default async function getModuleList( page: Puppeteer.Page ): Promise < M
 
     return {
 
-      id: parseInt( moduleEl.querySelector( '.ig-admin > span' ).getAttribute( 'data-module-item-id' ) ),
-      title: moduleEl.querySelector( '.ig-info span.locked_title' ).getAttribute( 'title' ).trim()
+      itemId: parseInt( moduleEl.querySelector( '.ig-admin > span' ).getAttribute( 'data-content-id' ) ),
+      moduleId: parseInt( moduleEl.querySelector( '.ig-admin > span' ).getAttribute( 'data-module-item-id' ) ),
+      title: moduleEl.querySelector( '.ig-info span.locked_title' ).getAttribute( 'title' ).trim(),
+      type: moduleEl.querySelector( '.ig-admin > span' ).getAttribute( 'data-module-type' ).trim()
 
     }
 
@@ -28,6 +31,7 @@ export default async function getModuleList( page: Puppeteer.Page ): Promise < M
 
   for ( let i = 0;  i < modulesEH.length; i++ ) {
 
+    const id = await page.evaluate( getId, modulesEH[ i ] );
     const title: string = await page.evaluate( getTitle, modulesEH[ i ] );
     const itemsEH = await modulesEH[ i ].$$( 'ul.items > li' );
     const items: ModuleItem[] = [];
@@ -46,6 +50,7 @@ export default async function getModuleList( page: Puppeteer.Page ): Promise < M
 
     modules.push( {
 
+      id: id,
       title: title,
       items: items
 
