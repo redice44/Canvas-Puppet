@@ -5,6 +5,7 @@ import createModule from './create';
 import deleteModule from './delete';
 import getModuleList from './list';
 import navigation from './nav';
+import updateModule from './update';
 
 import { Course } from '../course/interfaces';
 import { DeviceList } from '../devices/interfaces';
@@ -15,7 +16,8 @@ export default {
   capture: _capture_,
   create: _create_,
   delete: _delete_,
-  list: _list_
+  list: _list_,
+  update: _update_
 
 };
 
@@ -53,5 +55,12 @@ async function _delete_( page: Puppeteer.Page, rootUrl: string, course: Course, 
 
   await navigation.list( page, rootUrl, course );
   return await deleteModule( page, contentModule );
+
+}
+
+async function _update_( page: Puppeteer.Page, rootUrl: string, course: Course, contentModule: Module ) {
+
+  await navigation.list( page, rootUrl, course );
+  return await updateModule( page, contentModule );
 
 }

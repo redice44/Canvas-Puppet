@@ -1,3 +1,8 @@
+const triggerBtn = '.ig-header-admin > button.al-trigger';
+const modalForm = '#add_context_module_form';
+const modalSubmit = '.form-controls button.submit_button';
+const modalTitle = '#context_module_name'
+
 export const listSelectors = {
 
   list: '#context_modules > .context_module'
@@ -22,16 +27,26 @@ export const captureSelector = '#content-wrapper';
 export const createSelectors = {
 
   addBtn: 'button.add_module_link',
-  form: '#add_context_module_form',
+  form: modalForm,
   list: '#context_modules > .context_module',
-  nameInput: '#context_module_name',
-  submitBtn: '.form-controls button.submit_button'
+  nameInput: modalTitle,
+  submitBtn: modalSubmit
 
 }
 
 export const deleteSelectors = {
 
   delBtn: '.ig-header-admin a.delete_module_link',
-  triggerBtn: '.ig-header-admin > button.al-trigger'
+  triggerBtn: triggerBtn
+
+}
+
+export const updateSelectors = {
+
+  editBtn: '.ig-header-admin a.edit_module_link',
+  form: modalForm,
+  submitBtn: modalSubmit,
+  titleInput: modalTitle,
+  triggerBtn: triggerBtn
 
 }
