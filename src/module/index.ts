@@ -2,6 +2,7 @@ import * as Puppeteer from 'puppeteer';
 
 import captureModuleItem from './capture';
 import createModule from './create';
+import deleteModule from './delete';
 import getModuleList from './list';
 import navigation from './nav';
 
@@ -13,6 +14,7 @@ export default {
 
   capture: _capture_,
   create: _create_,
+  delete: _delete_,
   list: _list_
 
 };
@@ -40,10 +42,16 @@ async function _capture_( page: Puppeteer.Page, rootUrl: string, course: Course,
 
 }
 
-
 async function _create_( page: Puppeteer.Page, rootUrl: string, course: Course, contentModule: Module ) {
 
   await navigation.list( page, rootUrl, course );
   return await createModule( page, contentModule );
+
+}
+
+async function _delete_( page: Puppeteer.Page, rootUrl: string, course: Course, contentModule: Module ) {
+
+  await navigation.list( page, rootUrl, course );
+  return await deleteModule( page, contentModule );
 
 }

@@ -28,3 +28,10 @@ export const createSelectors = {
   submitBtn: '.form-controls button.submit_button'
 
 }
+
+export const deleteSelectors = {
+
+  delBtn: '.ig-header-admin a.delete_module_link',
+  triggerBtn: '.ig-header-admin > button.al-trigger'
+
+}
