@@ -8,22 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const goto_1 = require("../utility/goto");
 const DOM_1 = require("../errors/DOM");
 const navigation_1 = require("../errors/navigation");
+const clickAndNav_1 = require("../utility/clickAndNav");
 function login(page, loginInfo) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!process.env.RUN_SILENT) {
             console.log('Logging In');
         }
-        yield goto_1.default(page, loginInfo.url);
         try {
             yield page.click(loginInfo.selectors.username);
             yield page.keyboard.type(loginInfo.credentials.username);
             yield page.click(loginInfo.selectors.password);
             yield page.keyboard.type(loginInfo.credentials.password);
-            yield page.click(loginInfo.selectors.loginButton);
-            yield page.waitForNavigation();
+            yield clickAndNav_1.default(page, loginInfo.selectors.loginButton, { waitUntil: 'domcontentloaded' });
         }
         catch (e) {
             if (e.code && e.code === 'ERR_ASSERTION') {
@@ -35,7 +33,8 @@ function login(page, loginInfo) {
                 error.selector = e.message.substr(28);
                 throw error;
             }
-            else if (e.message.includes('Evaluation failed: DOMException') && e.message.includes('The provided selector is empty.')) {
+            else if (e.message.includes('Evaluation failed: DOMException') &&
+                e.message.includes('The provided selector is empty.')) {
                 if (!process.env.RUN_SILENT) {
                     console.log(`    DOMError: Empty Selector`);
                 }
@@ -47,15 +46,26 @@ function login(page, loginInfo) {
                 if (!process.env.RUN_SILENT) {
                     console.log(`    Navigation Error: Timed out`);
                 }
-                let error = new Error(e.message);
-                error.code = navigation_1.NavigationErrorCodes.TIMEOUT;
-                error.url = page.url();
-                throw error;
+                if (page.url() !== loginInfo.expectedLanding) {
+                    console.log(page.url());
+                    let error = new Error(e.message);
+                    error.code = navigation_1.NavigationErrorCodes.TIMEOUT;
+                    error.url = page.url();
+                    throw error;
+                }
+                else {
+                    if (!process.env.RUN_SILENT) {
+                        console.log(`    But page navigated successfully.`);
+                    }
+                }
             }
-            throw e;
+            else {
+                throw e;
+            }
         }
         if (page.url() !== loginInfo.expectedLanding) {
             if (!process.env.RUN_SILENT) {
+                console.log(page.url());
                 console.log(`    Navigation Error: Unexpected Landing Page`);
             }
             let error = new Error(`Unexpected Landing Page`);

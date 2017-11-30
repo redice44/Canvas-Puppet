@@ -1,3 +1,10 @@
+# Version 0.0.3
+
+- Refactor: Complete breaking changes
+- Reworked modules
+- Full CRUD for pages, questions, and question banks
+- Removed front page and course capturing (likely temporary)
+
 # Version 0.0.2b
 
 - Logs will only run if process.env.RUN_SILENT is false.

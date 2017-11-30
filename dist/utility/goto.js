@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const navigation_1 = require("../errors/navigation");
-function goto(page, url, retry = 2) {
+function goto(page, url, opts = {}, retry = 2) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!process.env.RUN_SILENT) {
             console.log(`  Navigating to: ${url}`);
         }
         try {
-            yield page.goto(url);
+            yield page.goto(url, opts);
         }
         catch (e) {
             if (e.message === `Failed to navigate: ${url}`) {
@@ -26,7 +26,7 @@ function goto(page, url, retry = 2) {
                     if (!process.env.RUN_SILENT) {
                         console.log(`    Retrying...\n`);
                     }
-                    yield goto(page, url, retry - 1);
+                    yield goto(page, url, opts, retry - 1);
                 }
                 else {
                     if (!process.env.RUN_SILENT) {
@@ -46,7 +46,7 @@ function goto(page, url, retry = 2) {
                     if (!process.env.RUN_SILENT) {
                         console.log(`    Retrying...\n`);
                     }
-                    yield goto(page, url, retry - 1);
+                    yield goto(page, url, opts, retry - 1);
                 }
                 else {
                     if (!process.env.RUN_SILENT) {

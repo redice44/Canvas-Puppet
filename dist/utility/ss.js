@@ -12,19 +12,15 @@ const mkdirp = require("mkdirp");
 function ss(el, ss, deviceName) {
     return __awaiter(this, void 0, void 0, function* () {
         if (!process.env.RUN_SILENT) {
-            console.log(`    Generating Screenshot: ${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`);
+            console.log(`    Generating Screenshot: ${ss.coursePath}/${ss.sectionPath}/${ss.uniquePath}/${deviceName}.png`);
         }
         try {
-            yield el.screenshot({
-                path: `${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`
-            });
+            yield el.screenshot({ path: `${ss.coursePath}/${ss.sectionPath}/${ss.uniquePath}/${deviceName}.png` });
         }
         catch (e) {
             if (e.code === 'ENOENT') {
-                mkdirp.sync(`${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}`);
-                yield el.screenshot({
-                    path: `${ss.rootPath}/${ss.subPrePath}/${ss.subPostPath}/${ss.date}/${deviceName}.png`
-                });
+                mkdirp.sync(`${ss.coursePath}/${ss.sectionPath}/${ss.uniquePath}`);
+                yield el.screenshot({ path: `${ss.coursePath}/${ss.sectionPath}/${ss.uniquePath}/${deviceName}.png` });
             }
             else {
                 throw e;
