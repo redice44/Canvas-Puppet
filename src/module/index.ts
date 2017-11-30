@@ -1,6 +1,7 @@
 import * as Puppeteer from 'puppeteer';
 
 import captureModuleItem from './capture';
+import createModule from './create';
 import getModuleList from './list';
 import navigation from './nav';
 
@@ -11,6 +12,7 @@ import { Module } from './interfaces';
 export default {
 
   capture: _capture_,
+  create: _create_,
   list: _list_
 
 };
@@ -35,5 +37,13 @@ async function _capture_( page: Puppeteer.Page, rootUrl: string, course: Course,
     await captureModuleItem( page, deviceList );
 
   }
+
+}
+
+
+async function _create_( page: Puppeteer.Page, rootUrl: string, course: Course, contentModule: Module ) {
+
+  await navigation.list( page, rootUrl, course );
+  return await createModule( page, contentModule );
 
 }

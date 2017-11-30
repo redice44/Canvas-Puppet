@@ -10,7 +10,7 @@ export interface ModuleItem {
 
 export interface Module {
 
-  id: number,
+  id?: number,
   title: string,
   items: ModuleItem[]
 
