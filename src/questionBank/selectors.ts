@@ -13,3 +13,9 @@ export const createSelectors = {
   title: '.header_content > a.title'
 
 };
+
+export const deleteSelectors = {
+
+  delBtn: '.links .delete_bank_link'
+
+};
