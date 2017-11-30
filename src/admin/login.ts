@@ -23,7 +23,7 @@ export default async function login( page: Puppeteer.Page, loginInfo: LoginInfo 
     await page.click( loginInfo.selectors.password );
     await page.keyboard.type( loginInfo.credentials.password );
 
-    await clickAndNav( page, loginInfo.selectors.loginButton, { waitUntil: 'domcontentloaded' } );
+    await clickAndNav( page, loginInfo.selectors.loginButton, { timeout: 10000, waitUntil: 'domcontentloaded' } );
 
   } catch ( e ) {
 
