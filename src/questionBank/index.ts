@@ -3,6 +3,7 @@ import * as Puppeteer from 'puppeteer';
 import createBank from './create';
 import deleteBank from './delete';
 import getBanks from './list';
+import updateBank from './update';
 import navigation from './nav';
 
 import { Course } from '../course/interfaces';
@@ -13,7 +14,8 @@ export default {
 
   create: _create_,
   delete: _delete_,
-  list: _list_
+  list: _list_,
+  update: _update_
 
 };
 
@@ -36,5 +38,12 @@ async function _list_( page: Puppeteer.Page, rootUrl: string, course: Course ): 
 
   await navigation.list( page, rootUrl, course );
   return await getBanks( page );
+
+}
+
+async function _update_( page: Puppeteer.Page, rootUrl: string, course: Course, qBank: QuestionBank ) {
+
+  await navigation.list( page, rootUrl, course );
+  await updateBank( page, qBank );
 
 }

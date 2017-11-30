@@ -19,3 +19,9 @@ export const deleteSelectors = {
   delBtn: '.links .delete_bank_link'
 
 };
+
+export const updateSelectors = {
+
+  editBtn: '.links .edit_bank_link'
+
+};
