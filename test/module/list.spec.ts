@@ -16,7 +16,7 @@ async function test() {
 
   await CanvasPuppet.admin.login( page, loginInfo );
   const courseList =  await CanvasPuppet.course.list( page, lmsInfo.url );
-  const moduleList = await CanvasPuppet.module.list( page, lmsInfo.url, courseList[ 0 ] );
+  const moduleList = await CanvasPuppet.module.list( page, lmsInfo.url, courseList[ 3 ] );
 
   console.log( JSON.stringify( moduleList ) );
 

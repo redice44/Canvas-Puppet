@@ -1,5 +1,7 @@
 import * as Puppeteer from 'puppeteer';
 
+import createModuleItem from './item/create';
+
 import { Module } from './interfaces';
 import { createSelectors as selectors } from './selectors';
 
@@ -21,6 +23,12 @@ export default async function createModule( page: Puppeteer.Page, contentModule:
   const moduleList = await page.$$( selectors.list );
   const newModule = moduleList[ moduleList.length - 1 ];
   contentModule.id = await page.evaluate( evalId, newModule );
+
+  for ( let i = 0; i < contentModule.items.length; i++ ) {
+
+    await createModuleItem( page, contentModule.id, contentModule.items[ i ] );
+
+  }
 
   return contentModule;
 

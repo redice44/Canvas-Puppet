@@ -25,7 +25,38 @@ async function test() {
   const contentModule: Module = {
 
     title: 'Testing Module',
-    items: []
+    items: [
+      {
+        "itemId": 32176,
+        // "moduleId": 169586,
+        "title": "Page 10",
+        "type": "wiki_page"
+      },
+      {
+        "itemId": 32177,
+        // "moduleId": 169587,
+        "title": "Page 11",
+        "type": "wiki_page"
+      },
+      {
+        "itemId": 32178,
+        // "moduleId": 169589,
+        "title": "Page 12",
+        "type": "wiki_page"
+      },
+      {
+        "itemId": 32179,
+        // "moduleId": 169588,
+        "title": "Page 13",
+        "type": "wiki_page"
+      },
+      {
+        "itemId": 32180,
+        // "moduleId": 169590,
+        "title": "Page 14",
+        "type": "wiki_page"
+      }
+    ]
 
   };
 

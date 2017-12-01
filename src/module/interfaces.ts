@@ -2,7 +2,7 @@
 export interface ModuleItem {
 
   itemId: number,
-  moduleId: number,
+  moduleId?: number,
   title: string,
   type: string
 

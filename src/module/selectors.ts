@@ -11,14 +11,19 @@ export const listSelectors = {
 
 export const moduleSelectors = {
 
+  addModuleItemBtn: '.ig-header-admin button.add_module_item_link',
   admin: '.ig-header-admin > span.publish-icon',
-  moduleItems: 'ul.items > li',
+  moduleItems: 'ul.items > li'
 
 }
 
 export const moduleItemSelectors = {
 
+  addBtn: '.ui-dialog-buttonpane button.add_item_button',
   admin: '.ig-admin > span.publish-icon',
+  modalContent: '#select_context_content_dialog',
+  modalSelect: '#add_module_item_select',
+  pageSelect: '#wiki_pages_select select'
 
 }
 
