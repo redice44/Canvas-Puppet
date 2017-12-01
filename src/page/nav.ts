@@ -16,7 +16,7 @@ export default {
 
 async function navToPageList( page: Puppeteer.Page, rootUrl: string, course: Course ) {
 
-  await goto( page, `${ rootUrl }/courses/${ course.id }/pages`, { waitUntil: 'networkidle0' } );
+  await goto( page, `${ rootUrl }/courses/${ course.id }/pages` );
 
   while ( await loadMore( page ) ) {
 
@@ -43,13 +43,13 @@ async function navToPage( page: Puppeteer.Page, rootUrl: string, course: Course,
 
   }
 
-  await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.id }`, { waitUntil: 'networkidle0' } );
+  await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.id }` );
 
 }
 
 async function navToNewPage( page: Puppeteer.Page, rootUrl: string, course: Course, contentPage: Page ) {
 
-  await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.title.split( ' ' ).join( '-' ) }/edit`, { waitUntil: 'networkidle0' } );
+  await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.title.split( ' ' ).join( '-' ) }/edit` );
 
 }
 
@@ -61,7 +61,7 @@ async function navToEditPage( page: Puppeteer.Page, rootUrl: string, course: Cou
 
   }
 
-  await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.id }/edit`, { waitUntil: 'networkidle0' } );
+  await goto( page, `${ rootUrl }/courses/${ course.id }/pages/${ contentPage.id }/edit` );
 
 }
 
