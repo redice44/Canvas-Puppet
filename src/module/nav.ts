@@ -20,6 +20,6 @@ async function navToModuleList( page: Puppeteer.Page, rootUrl: string, course: C
 
 async function navToModuleItem( page: Puppeteer.Page, rootUrl: string, course: Course, moduleItem: ModuleItem ) {
 
-  await goto( page, `${ rootUrl }/courses/${ course.id }/modules/items/${ moduleItem.id }` );
+  await goto( page, `${ rootUrl }/courses/${ course.id }/modules/items/${ moduleItem.moduleId }` );
 
 }

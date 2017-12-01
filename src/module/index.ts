@@ -2,11 +2,9 @@ import * as Puppeteer from 'puppeteer';
 
 import captureModuleItem from './capture';
 import createModule from './create';
-import createModuleItem from './item/create';
 import deleteModule from './delete';
 import getModuleList from './list';
 import navigation from './nav';
-import parseModule from './parseModule';
 import updateModule from './update';
 
 import { Course } from '../course/interfaces';
@@ -49,19 +47,7 @@ async function _capture_( page: Puppeteer.Page, rootUrl: string, course: Course,
 async function _create_( page: Puppeteer.Page, rootUrl: string, course: Course, contentModule: Module ) {
 
   await navigation.list( page, rootUrl, course );
-  // const newModule = await createModule( page, contentModule );
   return await createModule( page, contentModule );
-  // await navigation.list( page, rootUrl, course );
-
-  // for ( let i = 0; i < newModule.items.length; i++ ) {
-
-  //   await createModuleItem( page, newModule.id, newModule.items[ i ] );
-
-  // }
-
-  // await parseModule
-
-
 
 }
 
