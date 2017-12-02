@@ -81,11 +81,20 @@ export default async function getQuestions( page: Puppeteer.Page ): Promise < Qu
 
   if ( needsExpanding ) {
 
-    const numQuestions = await page.$$eval( selectors.list, questions => questions.length );
+    let numQuestions = await page.$$( `${ selectors.list } ${ selectors.question.isLink }` );
 
-    for ( let i = 1; i <= numQuestions; i++ ) {
+    while ( numQuestions.length > 0 ) {
 
-      await page.click( `${ selectors.question.isLinkParent.replace( 'INDEX', ''+i ) } > ${ selectors.question.isLink }`);
+      for ( let i = 0; i < numQuestions.length; i++ ) {
+
+        // await page.click( `${ selectors.question.isLinkParent.replace( 'INDEX', ''+i ) } > ${ selectors.question.isLink }`);
+        await numQuestions[ i ].click();
+
+      }
+
+      numQuestions = await page.$$( `${ selectors.list } ${ selectors.question.isLink }` );
+
+      console.log( numQuestions );
 
     }
 
