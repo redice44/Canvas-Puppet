@@ -9,12 +9,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const selectors_1 = require("./selectors");
-function getCourseList(page, includeTerms) {
+function getCourseList(page, excludeRoles, includeTerms) {
     return __awaiter(this, void 0, void 0, function* () {
-        const current = yield page.evaluate(getCourse, selectors_1.default.tables.current, selectors_1.default.course);
-        const past = yield page.evaluate(getCourse, selectors_1.default.tables.past, selectors_1.default.course);
-        const future = yield page.evaluate(getCourse, selectors_1.default.tables.future, selectors_1.default.course);
-        let courses = current.concat(past, future);
+        const evalInnerHTML = element => element ? element.innerHTML.trim() : null;
+        const evalHref = element => element ? element.getAttribute('href') : null;
+        const coursesElement = yield page.$$(selectors_1.listSelectors.courses);
+        let courses = [];
+        for (let i = 0; i < coursesElement.length; i++) {
+            const linkElement = yield coursesElement[i].$(selectors_1.listSelectors.link);
+            let id = yield page.evaluate(evalHref, linkElement);
+            if (id) {
+                const titleElement = yield coursesElement[i].$(selectors_1.listSelectors.title);
+                const roleElement = yield coursesElement[i].$(selectors_1.listSelectors.role);
+                const termElement = yield coursesElement[i].$(selectors_1.listSelectors.term);
+                id = id.split('/');
+                id = id[id.length - 1];
+                courses.push({
+                    id: id,
+                    role: yield page.evaluate(evalInnerHTML, roleElement),
+                    title: yield page.evaluate(evalInnerHTML, titleElement),
+                    term: yield page.evaluate(evalInnerHTML, termElement)
+                });
+            }
+        }
+        if (excludeRoles) {
+            courses = courses.filter(course => !excludeRoles.includes(course.role));
+        }
         if (includeTerms) {
             courses = courses.filter(course => includeTerms.includes(course.term));
         }
@@ -22,25 +42,4 @@ function getCourseList(page, includeTerms) {
     });
 }
 exports.default = getCourseList;
-function getCourse(table, selector) {
-    let numCourses = document.querySelectorAll(`${table}${selector.row}`).length;
-    let courses = [];
-    for (let i = 1; i <= numCourses; i++) {
-        const titleSelector = selector.title.replace('INDEX', i);
-        const linkSelector = selector.link.replace('INDEX', i);
-        const termSelector = selector.term.replace('INDEX', i);
-        const titleEl = document.querySelector(`${table}${titleSelector}`);
-        const linkEl = document.querySelector(`${table}${linkSelector}`);
-        const termEl = document.querySelector(`${table}${termSelector}`);
-        if (titleEl) {
-            const id = linkEl.getAttribute('href').split('/');
-            courses.push({
-                title: titleEl.innerHTML.trim(),
-                id: id[id.length - 1],
-                term: termEl.innerHTML.trim()
-            });
-        }
-    }
-    return courses;
-}
 //# sourceMappingURL=list.js.map

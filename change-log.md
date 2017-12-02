@@ -1,3 +1,7 @@
+# Version 0.0.4
+
+- Feature: CRUD for modules
+
 # Version 0.0.3
 
 - Refactor: Complete breaking changes

@@ -13,10 +13,10 @@ const nav_1 = require("./nav");
 exports.default = {
     list: _list_
 };
-function _list_(page, rootUrl, includeTerms) {
+function _list_(page, rootUrl, excludeRoles, includeTerms) {
     return __awaiter(this, void 0, void 0, function* () {
         yield nav_1.default.list(page, rootUrl);
-        return yield list_1.default(page, includeTerms);
+        return yield list_1.default(page, excludeRoles, includeTerms);
     });
 }
 //# sourceMappingURL=index.js.map

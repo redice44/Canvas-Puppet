@@ -21,7 +21,7 @@ function login(page, loginInfo) {
             yield page.keyboard.type(loginInfo.credentials.username);
             yield page.click(loginInfo.selectors.password);
             yield page.keyboard.type(loginInfo.credentials.password);
-            yield clickAndNav_1.default(page, loginInfo.selectors.loginButton, { waitUntil: 'domcontentloaded' });
+            yield clickAndNav_1.default(page, loginInfo.selectors.loginButton, { timeout: 10000, waitUntil: 'domcontentloaded' });
         }
         catch (e) {
             if (e.code && e.code === 'ERR_ASSERTION') {

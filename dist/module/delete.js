@@ -8,19 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const goto_1 = require("../utility/goto");
-exports.default = {
-    list: navToModuleList,
-    moduleItem: navToModuleItem
-};
-function navToModuleList(page, rootUrl, course) {
+const selectors_1 = require("./selectors");
+function deleteModule(page, contentModule) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/modules`);
+        page.once('dialog', (dialog) => __awaiter(this, void 0, void 0, function* () { return yield dialog.accept(); }));
+        // The button's event listener isn't attached for some unknown amount of time. ¯\_(ツ)_/¯
+        yield page.waitFor(1000);
+        const moduleElement = yield page.$(`#context_module_${contentModule.id}`);
+        yield (yield moduleElement.$(selectors_1.deleteSelectors.triggerBtn)).click();
+        yield (yield moduleElement.$(selectors_1.deleteSelectors.delBtn)).click();
     });
 }
-function navToModuleItem(page, rootUrl, course, moduleItem) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/modules/items/${moduleItem.moduleId}`);
-    });
-}
-//# sourceMappingURL=nav.js.map
+exports.default = deleteModule;
+//# sourceMappingURL=delete.js.map

@@ -18,7 +18,7 @@ exports.default = {
 };
 function navToPageList(page, rootUrl, course) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/pages`, { waitUntil: 'networkidle0' });
+        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/pages`);
         while (yield loadMore(page)) {
             if (!process.env.RUN_SILENT) {
                 console.log(`    Loading more pages`);
@@ -34,12 +34,12 @@ function navToPage(page, rootUrl, course, contentPage) {
         if (!contentPage.id) {
             throw new Error('Page missing ID');
         }
-        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/pages/${contentPage.id}`, { waitUntil: 'networkidle0' });
+        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/pages/${contentPage.id}`);
     });
 }
 function navToNewPage(page, rootUrl, course, contentPage) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/pages/${contentPage.title.split(' ').join('-')}/edit`, { waitUntil: 'networkidle0' });
+        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/pages/${contentPage.title.split(' ').join('-')}/edit`);
     });
 }
 function navToEditPage(page, rootUrl, course, contentPage) {
@@ -47,7 +47,7 @@ function navToEditPage(page, rootUrl, course, contentPage) {
         if (!contentPage.id) {
             throw new Error('Page missing ID');
         }
-        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/pages/${contentPage.id}/edit`, { waitUntil: 'networkidle0' });
+        yield goto_1.default(page, `${rootUrl}/courses/${course.id}/pages/${contentPage.id}/edit`);
     });
 }
 function loadMore(page) {
