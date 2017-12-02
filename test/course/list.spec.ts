@@ -10,14 +10,31 @@ test();
 
 async function test() {
 
+
+  const rootUrl = lmsInfo.url;
+
   const argOpts = defaultArgs();
-  const browser: Puppeteer.Browser = await Puppeteer.launch( { headless: argOpts.headless } );
+  const browser: Puppeteer.Browser = await Puppeteer.launch( {
+
+    devtools: argOpts.devTools,
+    headless: argOpts.headless
+
+  } );
+
   const page: Puppeteer.Page = await browser.newPage();
 
   await CanvasPuppet.admin.login( page, loginInfo );
-  console.log( await CanvasPuppet.course.list( page, lmsInfo.url ) );
+  let courseList = await CanvasPuppet.course.list( page, rootUrl );
+  console.log( JSON.stringify( courseList ) );
 
-  await page.close();
-  await browser.close();
+  courseList = await CanvasPuppet.course.list( page, rootUrl, [ 'Student' ] );
+  console.log( JSON.stringify( courseList ) );
+
+  if ( argOpts.finish ) {
+
+    await page.close();
+    await browser.close();
+
+  }
 
 }

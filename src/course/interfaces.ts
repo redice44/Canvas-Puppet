@@ -1,7 +1,8 @@
 export interface Course {
 
-  title: string,
+  id: string,
+  role: string,
   term: string,
-  id: string
+  title: string
 
 }

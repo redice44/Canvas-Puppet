@@ -1,52 +1,52 @@
 import * as Puppeteer from 'puppeteer';
 
 import { Course } from './interfaces';
-import selectors from './selectors';
+import { listSelectors as selectors } from './selectors';
 
-export default async function getCourseList( page: Puppeteer.Page, includeTerms?: string[] ): Promise < Course[] > {
+export default async function getCourseList( page: Puppeteer.Page, excludeRoles?: string[], includeTerms?: string[] ): Promise < Course[] > {
 
-  const current: Course[] = await page.evaluate( getCourse, selectors.tables.current, selectors.course );
-  const past: Course[] = await page.evaluate( getCourse, selectors.tables.past, selectors.course );
-  const future: Course[] = await page.evaluate( getCourse, selectors.tables.future, selectors.course );
-  let courses: Course[] = current.concat( past, future );
+  const evalInnerHTML = element => element ? element.innerHTML.trim() : null;
+  const evalHref = element => element ? element.getAttribute( 'href' ) : null;
 
-  if ( includeTerms ) {
+  const coursesElement = await page.$$( selectors.courses );
+  let courses = [];
 
-    courses = courses.filter( course => includeTerms.includes( course.term ) );
+  for ( let i = 0; i < coursesElement.length; i++ ) {
 
-  }
+    const linkElement = await coursesElement[ i ].$( selectors.link );
+    let id = await page.evaluate( evalHref, linkElement );
 
-  return courses;
+    if ( id ) {
 
-}
+      const titleElement = await coursesElement[ i ].$( selectors.title );
+      const roleElement = await coursesElement[ i ].$( selectors.role );
+      const termElement = await coursesElement[ i ].$( selectors.term );
 
-function getCourse( table, selector ): Course[] {
-
-  let numCourses = document.querySelectorAll( `${table}${selector.row}` ).length;
-  let courses: Course[] = [];
-
-  for ( let i = 1; i <= numCourses; i++ ) {
-
-    const titleSelector = selector.title.replace( 'INDEX', i );
-    const linkSelector = selector.link.replace( 'INDEX', i );
-    const termSelector = selector.term.replace( 'INDEX', i );
-    const titleEl = document.querySelector( `${table}${titleSelector}` );
-    const linkEl = document.querySelector( `${table}${linkSelector}` );
-    const termEl = document.querySelector( `${table}${termSelector}` );
-
-    if ( titleEl ) {
-
-      const id = linkEl.getAttribute( 'href' ).split( '/' );
+      id = id.split( '/' );
+      id = id[ id.length - 1 ];
 
       courses.push( {
 
-        title: titleEl.innerHTML.trim(),
-        id: id[ id.length-1 ],
-        term: termEl.innerHTML.trim()
+        id: id,
+        role: await page.evaluate( evalInnerHTML, roleElement ),
+        title: await page.evaluate( evalInnerHTML, titleElement ),
+        term: await page.evaluate( evalInnerHTML, termElement )
 
       } );
 
     }
+
+  }
+
+  if ( excludeRoles ) {
+
+    courses = courses.filter( course => !excludeRoles.includes( course.role ) );
+
+  }
+
+  if ( includeTerms ) {
+
+    courses = courses.filter( course => includeTerms.includes( course.term ) );
 
   }
 

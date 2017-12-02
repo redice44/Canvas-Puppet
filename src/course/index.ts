@@ -11,9 +11,9 @@ export default {
 
 };
 
-async function _list_( page: Puppeteer.Page, rootUrl: string, includeTerms?: string[] ): Promise < Course[] > {
+async function _list_( page: Puppeteer.Page, rootUrl: string, excludeRoles?: string[], includeTerms?: string[] ): Promise < Course[] > {
 
   await navigation.list( page, rootUrl );
-  return await getCourseList( page, includeTerms );
+  return await getCourseList( page, excludeRoles, includeTerms );
 
 }

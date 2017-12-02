@@ -1,3 +1,16 @@
+export const listSelectors = {
+
+  courses: '#my_courses_table > tbody > tr',
+  link: 'td.course-list-course-title-column > a',
+  role: 'td.course-list-enrolled-as-column',
+  term: 'td.course-list-term-column',
+  title: 'td.course-list-course-title-column span.name'
+
+}
+
+
+
+
 export default {
   tables: {
     current: '#my_courses_table',
