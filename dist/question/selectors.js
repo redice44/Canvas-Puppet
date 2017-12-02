@@ -5,7 +5,7 @@ exports.default = {
     questionDetails: '#show_question_details',
     question: {
         root: '.question',
-        isLink: '.question > .header > a',
+        isLink: '.header > a',
         isLinkParent: '#questions > div:nth-child(INDEX)',
         text: '.question > .text > .question_text',
         title: '.question > .header > .name',

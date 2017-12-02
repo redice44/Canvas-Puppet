@@ -55,9 +55,14 @@ function getQuestions(page) {
         };
         const needsExpanding = yield page.$eval(selectors_1.default.questionDetails, showDetails);
         if (needsExpanding) {
-            const numQuestions = yield page.$$eval(selectors_1.default.list, questions => questions.length);
-            for (let i = 1; i <= numQuestions; i++) {
-                yield page.click(`${selectors_1.default.question.isLinkParent.replace('INDEX', '' + i)} > ${selectors_1.default.question.isLink}`);
+            let numQuestions = yield page.$$(`${selectors_1.default.list} ${selectors_1.default.question.isLink}`);
+            while (numQuestions.length > 0) {
+                for (let i = 0; i < numQuestions.length; i++) {
+                    // await page.click( `${ selectors.question.isLinkParent.replace( 'INDEX', ''+i ) } > ${ selectors.question.isLink }`);
+                    yield numQuestions[i].click();
+                }
+                numQuestions = yield page.$$(`${selectors_1.default.list} ${selectors_1.default.question.isLink}`);
+                console.log(numQuestions);
             }
         }
         return yield page.$$eval(selectors_1.default.list, extractQuestions, selectors_1.default.question, selectors_1.default.questionTypes);

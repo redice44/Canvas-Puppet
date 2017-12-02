@@ -1,3 +1,7 @@
+# Version 0.0.4a
+
+- Fixes error when Canvas fails to load a question.
+
 # Version 0.0.4
 
 - Feature: CRUD for modules
