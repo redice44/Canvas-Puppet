@@ -62,7 +62,6 @@ function getQuestions(page) {
                     yield numQuestions[i].click();
                 }
                 numQuestions = yield page.$$(`${selectors_1.default.list} ${selectors_1.default.question.isLink}`);
-                console.log(numQuestions);
             }
         }
         return yield page.$$eval(selectors_1.default.list, extractQuestions, selectors_1.default.question, selectors_1.default.questionTypes);

@@ -94,8 +94,6 @@ export default async function getQuestions( page: Puppeteer.Page ): Promise < Qu
 
       numQuestions = await page.$$( `${ selectors.list } ${ selectors.question.isLink }` );
 
-      console.log( numQuestions );
-
     }
 
   }
